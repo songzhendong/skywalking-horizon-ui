@@ -19,6 +19,7 @@ The version line is shared by every package in the monorepo (apps + shared packa
 ### General Service — Node.js runtime
 
 - **Six instance dashboard line widgets for Node.js runtime metrics** — process CPU, V8 heap used/total/limit, RSS, and external memory (`meter_instance_nodejs_*`). Each line widget uses `visibleWhen` so widgets render only when the Node.js agent reports runtime data.
+- **Six additional instance dashboard line widgets for Node.js runtime metrics (v2)** — array buffers, process uptime, peak malloced memory, detached contexts, and old/new space heap used (`meter_instance_nodejs_*`). Each line widget uses the same `visibleWhen` gate as the v1 Node.js runtime panels.
 
 ### Profiling
 

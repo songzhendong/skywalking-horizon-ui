@@ -120,6 +120,48 @@
         ]
       },
       {
+        "title": "Tampons de tableau",
+        "tip": "Agent Node.js : mémoire ArrayBuffer/SharedArrayBuffer en Mo (process.memoryUsage().arrayBuffers).",
+        "expressions": [
+          null
+        ]
+      },
+      {
+        "title": "Uptime du processus",
+        "tip": "Agent Node.js : uptime du processus en secondes (process.uptime()).",
+        "expressions": [
+          null
+        ]
+      },
+      {
+        "title": "Mémoire malloc de pic",
+        "tip": "Agent Node.js : mémoire malloc V8 de pic en Mo (v8.getHeapStatistics().peak_malloced_memory).",
+        "expressions": [
+          null
+        ]
+      },
+      {
+        "title": "Contextes détachés",
+        "tip": "Agent Node.js : nombre de contextes V8 détachés (v8.getHeapStatistics().number_of_detached_contexts).",
+        "expressions": [
+          null
+        ]
+      },
+      {
+        "title": "Ancienne génération utilisée",
+        "tip": "Agent Node.js : heap old generation utilisé en Mo (v8.getHeapSpaceStatistics old_space).",
+        "expressions": [
+          null
+        ]
+      },
+      {
+        "title": "Nouvelle génération utilisée",
+        "tip": "Agent Node.js : heap new generation utilisé en Mo (v8.getHeapSpaceStatistics new_space).",
+        "expressions": [
+          null
+        ]
+      },
+      {
         "title": "CPU JVM",
         "tip": "CPU JVM tel que remonté par l'agent. Ne s'affiche que lorsque l'instance est une JVM."
       },
