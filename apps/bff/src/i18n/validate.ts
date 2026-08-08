@@ -101,6 +101,23 @@ function walk(source: unknown, overlay: unknown, path: string[], findings: Findi
         continue;
       }
       const sv = src[k];
+      // Structural widget identity for id-based merge — not a translated leaf.
+      if (k === 'id') {
+        if (typeof sv !== 'string' || typeof v !== 'string') {
+          findings.push({
+            file,
+            path: [...path, k].join('.'),
+            message: 'overlay id must be a string matching the source widget id',
+          });
+        } else if (sv !== v) {
+          findings.push({
+            file,
+            path: [...path, k].join('.'),
+            message: `overlay id "${v}" does not match source id "${sv}"`,
+          });
+        }
+        continue;
+      }
       if (STRING_FIELDS.has(k)) {
         if (typeof sv !== 'string') {
           findings.push({

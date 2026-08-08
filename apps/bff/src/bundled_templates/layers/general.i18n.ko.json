@@ -22,24 +22,30 @@
           "트래픽",
           "느린 요청",
           "성공률"
-        ]
+        ],
+        "id": "top_apis"
       },
       {
-        "title": "트래픽"
+        "title": "트래픽",
+        "id": "traffic_line"
       },
       {
-        "title": "오류율"
+        "title": "오류율",
+        "id": "err_line"
       },
       {
         "title": "Apdex",
-        "tip": "사용자 만족도 점수 (0 – 1 척도)."
+        "tip": "사용자 만족도 점수 (0 – 1 척도).",
+        "id": "apdex_line"
       },
       {
         "title": "응답 시간 백분위",
-        "tip": "p50 / p75 / p90 / p95 / p99 지연 시간 — 응답 시간 분포의 꼬리 영역입니다."
+        "tip": "p50 / p75 / p90 / p95 / p99 지연 시간 — 응답 시간 분포의 꼬리 영역입니다.",
+        "id": "percentile_line"
       },
       {
-        "title": "평균 응답 시간"
+        "title": "평균 응답 시간",
+        "id": "resp_time_line"
       },
       {
         "title": "MQ 소비율 + 지연 시간",
@@ -47,81 +53,144 @@
         "expressionLabels": [
           "count",
           "지연 시간"
-        ]
+        ],
+        "id": "mq_combined"
       },
       {
         "title": "부하 기준 상위 10 인스턴스",
-        "tip": "선택한 서비스의 인스턴스를 트래픽 기준으로 정렬합니다."
+        "tip": "선택한 서비스의 인스턴스를 트래픽 기준으로 정렬합니다.",
+        "id": "top_instance_load"
       },
       {
         "title": "가장 느린 인스턴스 10개",
-        "tip": "선택한 서비스의 인스턴스를 평균 응답 시간 기준으로 정렬합니다."
+        "tip": "선택한 서비스의 인스턴스를 평균 응답 시간 기준으로 정렬합니다.",
+        "id": "top_instance_slow"
       },
       {
         "title": "성공률 기준 상위 10 인스턴스",
-        "tip": "top_n(service_instance_sla,10,asc)/100 — 나쁜 순부터 정렬합니다."
+        "tip": "top_n(service_instance_sla,10,asc)/100 — 나쁜 순부터 정렬합니다.",
+        "id": "top_instance_sla"
       },
       {
         "title": "느린 데이터베이스 구문",
-        "tip": "이 서비스에서 캡처된 가장 느린 데이터베이스 구문 20개입니다. top_n_service_database_statement에서 가져옵니다. 해당 윈도우에 OAP가 캡처한 구문이 없으면 `no data` 가 표시됩니다."
+        "tip": "이 서비스에서 캡처된 가장 느린 데이터베이스 구문 20개입니다. top_n_service_database_statement에서 가져옵니다. 해당 윈도우에 OAP가 캡처한 구문이 없으면 `no data` 가 표시됩니다.",
+        "id": "slow_statements"
       }
     ],
     "instance": [
       {
         "title": "서비스 인스턴스 부하",
-        "tip": "선택한 인스턴스에 대한 분당 호출 수입니다."
+        "tip": "선택한 인스턴스에 대한 분당 호출 수입니다.",
+        "id": "instance_cpm_line"
       },
       {
-        "title": "서비스 인스턴스 지연 시간"
+        "title": "서비스 인스턴스 지연 시간",
+        "id": "instance_resp_line"
       },
       {
-        "title": "서비스 인스턴스 성공률"
+        "title": "서비스 인스턴스 성공률",
+        "id": "instance_sla_line"
       },
       {
         "title": "프로세스 CPU",
         "tip": "Node.js 에이전트: 프로세스 CPU(user + system), 수집 간격 기준 (%).",
         "expressions": [
           null
-        ]
+        ],
+        "id": "nodejs_process_cpu"
       },
       {
         "title": "V8 힙 사용량",
         "tip": "Node.js 에이전트: V8 힙 사용량(process.memoryUsage().heapUsed), MB.",
         "expressions": [
           null
-        ]
+        ],
+        "id": "nodejs_heap_used"
       },
       {
         "title": "V8 힙 총량",
         "tip": "Node.js 에이전트: V8 힙 총량(process.memoryUsage().heapTotal), MB.",
         "expressions": [
           null
-        ]
+        ],
+        "id": "nodejs_heap_total"
       },
       {
         "title": "V8 힙 한도",
         "tip": "Node.js 에이전트: V8 최대 힙 크기(v8.getHeapStatistics().heap_size_limit), MB.",
         "expressions": [
           null
-        ]
+        ],
+        "id": "nodejs_heap_limit"
       },
       {
         "title": "프로세스 RSS",
         "tip": "Node.js 에이전트: 상주 메모리 집합(process.memoryUsage().rss), MB.",
         "expressions": [
           null
-        ]
+        ],
+        "id": "nodejs_rss"
       },
       {
         "title": "외부 메모리",
         "tip": "Node.js 에이전트: V8에 바인딩된 C++ 객체(process.memoryUsage().external), MB.",
         "expressions": [
           null
-        ]
+        ],
+        "id": "nodejs_external_memory"
+      },
+      {
+        "title": "배열 버퍼",
+        "tip": "Node.js 에이전트: ArrayBuffer/SharedArrayBuffer 메모리(process.memoryUsage().arrayBuffers), MB.",
+        "expressions": [
+          null
+        ],
+        "id": "nodejs_array_buffers"
+      },
+      {
+        "title": "프로세스 가동 시간",
+        "tip": "Node.js 에이전트: 프로세스 가동 시간(process.uptime()), 초.",
+        "expressions": [
+          null
+        ],
+        "id": "nodejs_uptime"
+      },
+      {
+        "title": "최대 malloc 메모리",
+        "tip": "Node.js 에이전트: V8 최대 malloc 메모리(v8.getHeapStatistics().peak_malloced_memory), MB.",
+        "expressions": [
+          null
+        ],
+        "id": "nodejs_peak_malloced_memory"
+      },
+      {
+        "title": "Malloc 메모리",
+        "tip": "Node.js 에이전트: 현재 V8 malloc 메모리(v8.getHeapStatistics().malloced_memory), MB.",
+        "expressions": [
+          null
+        ],
+        "id": "nodejs_malloced_memory"
+      },
+      {
+        "title": "구 세대 힙 사용량",
+        "tip": "Node.js 에이전트: V8 구 세대 힙 사용량(v8.getHeapSpaceStatistics old_space), MB.",
+        "expressions": [
+          null
+        ],
+        "id": "nodejs_old_space_used"
+      },
+      {
+        "title": "신 세대 힙 사용량",
+        "tip": "Node.js 에이전트: V8 신 세대 힙 사용량(v8.getHeapSpaceStatistics new_space), MB.",
+        "expressions": [
+          null
+        ],
+        "id": "nodejs_new_space_used"
       },
       {
         "title": "JVM CPU",
-        "tip": "에이전트가 보고하는 JVM CPU입니다. 인스턴스가 JVM일 때만 표시됩니다."
+        "tip": "에이전트가 보고하는 JVM CPU입니다. 인스턴스가 JVM일 때만 표시됩니다.",
+        "id": "jvm_cpu"
       },
       {
         "title": "JVM 메모리",
@@ -131,7 +200,8 @@
           "heap 최대",
           "non-heap",
           "non-heap 최대"
-        ]
+        ],
+        "id": "jvm_memory"
       },
       {
         "title": "JVM 메모리 상세",
@@ -148,7 +218,8 @@
           "codeheap (non-nmethods)",
           "codeheap (profiled nmethods)",
           "codeheap (non-profiled nmethods)"
-        ]
+        ],
+        "id": "jvm_memory_detail"
       },
       {
         "title": "JVM 스레드 수",
@@ -156,7 +227,8 @@
           "활성",
           "daemon",
           "피크"
-        ]
+        ],
+        "id": "jvm_thread_count"
       },
       {
         "title": "JVM 스레드 상태 수",
@@ -166,7 +238,8 @@
           "blocked",
           "waiting",
           "timed-waiting"
-        ]
+        ],
+        "id": "jvm_thread_state"
       },
       {
         "title": "JVM GC 시간",
@@ -174,7 +247,8 @@
           "young",
           "old",
           "normal"
-        ]
+        ],
+        "id": "jvm_gc_time"
       },
       {
         "title": "JVM GC 수",
@@ -182,7 +256,8 @@
           "young",
           "old",
           "normal"
-        ]
+        ],
+        "id": "jvm_gc_count"
       },
       {
         "title": "JVM 클래스 수",
@@ -190,11 +265,13 @@
           "loaded",
           "총 loaded",
           "총 unloaded"
-        ]
+        ],
+        "id": "jvm_class_count"
       },
       {
         "title": "CLR CPU",
-        "tip": ".NET 전용: 인스턴스가 CLR 메트릭을 보고할 때 표시됩니다."
+        "tip": ".NET 전용: 인스턴스가 CLR 메트릭을 보고할 때 표시됩니다.",
+        "id": "clr_cpu"
       },
       {
         "title": "CLR 스레드",
@@ -202,10 +279,12 @@
           "worker 가용",
           "completion-port 가용",
           "completion-port 최대"
-        ]
+        ],
+        "id": "clr_thread"
       },
       {
-        "title": "CLR Heap 메모리"
+        "title": "CLR Heap 메모리",
+        "id": "clr_heap"
       },
       {
         "title": "CLR GC",
@@ -213,40 +292,49 @@
           "gen 0",
           "gen 1",
           "gen 2"
-        ]
+        ],
+        "id": "clr_gc"
       },
       {
         "title": "Spring HTTP 요청 수",
-        "tip": "Spring Sleuth / Spring Boot Actuator — http.server.requests 카운터입니다."
+        "tip": "Spring Sleuth / Spring Boot Actuator — http.server.requests 카운터입니다.",
+        "id": "sleuth_http_req_count"
       },
       {
-        "title": "Spring HTTP 요청 시간"
+        "title": "Spring HTTP 요청 시간",
+        "id": "sleuth_http_req_duration"
       },
       {
-        "title": "Spring 인스턴스 CPU 사용량"
+        "title": "Spring 인스턴스 CPU 사용량",
+        "id": "sleuth_proc_cpu"
       },
       {
-        "title": "Spring OS CPU 사용량"
+        "title": "Spring OS CPU 사용량",
+        "id": "sleuth_os_cpu"
       },
       {
-        "title": "Spring OS 시스템 부하"
+        "title": "Spring OS 시스템 부하",
+        "id": "sleuth_os_load"
       },
       {
         "title": "Spring OS 프로세스 파일",
         "expressionLabels": [
           "open",
           "최대"
-        ]
+        ],
+        "id": "sleuth_proc_files"
       },
       {
-        "title": "Spring JVM GC 정지 시간"
+        "title": "Spring JVM GC 정지 시간",
+        "id": "sleuth_jvm_gc_pause"
       },
       {
         "title": "Spring JVM 메모리",
         "expressionLabels": [
           "사용",
           "최대"
-        ]
+        ],
+        "id": "sleuth_jvm_memory"
       },
       {
         "title": "Spring JVM 스레드",
@@ -254,22 +342,26 @@
           "활성",
           "daemon",
           "피크"
-        ]
+        ],
+        "id": "sleuth_jvm_thread"
       },
       {
         "title": "Spring JVM 클래스",
         "expressionLabels": [
           "loaded",
           "unloaded"
-        ]
+        ],
+        "id": "sleuth_jvm_classes"
       },
       {
         "title": "Spring 데이터베이스 커넥션 풀",
-        "tip": "HikariCP / Spring Boot 데이터소스 메트릭 — 풀별 연결 수입니다."
+        "tip": "HikariCP / Spring Boot 데이터소스 메트릭 — 풀별 연결 수입니다.",
+        "id": "sleuth_datasource"
       },
       {
         "title": "Spring 스레드 풀",
-        "tip": "Spring Boot 스레드 풀 미터 — executor 별 active, queued, max 스레드 수입니다."
+        "tip": "Spring Boot 스레드 풀 미터 — executor 별 active, queued, max 스레드 수입니다.",
+        "id": "sleuth_thread_pool"
       },
       {
         "title": "Spring JDBC 연결",
@@ -277,7 +369,8 @@
           "active",
           "유휴",
           "최대"
-        ]
+        ],
+        "id": "sleuth_jdbc"
       },
       {
         "title": "Spring Tomcat 세션",
@@ -285,7 +378,8 @@
           "active",
           "최대",
           "rejected"
-        ]
+        ],
+        "id": "sleuth_tomcat"
       },
       {
         "title": "Golang Goroutine / OS 스레드",
@@ -293,46 +387,60 @@
         "expressionLabels": [
           "goroutine",
           "OS 스레드"
-        ]
+        ],
+        "id": "go_goroutines"
       },
       {
-        "title": "Golang GC 정지 시간 (분당)"
+        "title": "Golang GC 정지 시간 (분당)",
+        "id": "go_gc_pause"
       },
       {
-        "title": "Golang GC 수 (분당)"
+        "title": "Golang GC 수 (분당)",
+        "id": "go_gc_count"
       },
       {
-        "title": "Golang Heap Alloc (분당)"
+        "title": "Golang Heap Alloc (분당)",
+        "id": "go_heap_alloc"
       },
       {
-        "title": "Golang Goroutine 스케줄 시간"
+        "title": "Golang Goroutine 스케줄 시간",
+        "id": "go_sched_lat"
       },
       {
-        "title": "Golang GC Free (분당)"
+        "title": "Golang GC Free (분당)",
+        "id": "go_heap_frees"
       },
       {
-        "title": "Golang Alloc 크기 (분당)"
+        "title": "Golang Alloc 크기 (분당)",
+        "id": "go_alloc_size"
       },
       {
-        "title": "Golang Free 크기 (분당)"
+        "title": "Golang Free 크기 (분당)",
+        "id": "go_free_size"
       },
       {
-        "title": "Golang Heap 객체"
+        "title": "Golang Heap 객체",
+        "id": "go_heap_objects"
       },
       {
-        "title": "Golang Heap"
+        "title": "Golang Heap",
+        "id": "go_heap"
       },
       {
-        "title": "Golang 메타데이터 Mspan"
+        "title": "Golang 메타데이터 Mspan",
+        "id": "go_mspan"
       },
       {
-        "title": "Golang 메타데이터 Mcache"
+        "title": "Golang 메타데이터 Mcache",
+        "id": "go_mcache"
       },
       {
-        "title": "Golang GC 목표 크기"
+        "title": "Golang GC 목표 크기",
+        "id": "go_gc_goal"
       },
       {
-        "title": "Golang CGO 호출 (분당)"
+        "title": "Golang CGO 호출 (분당)",
+        "id": "go_cgo"
       },
       {
         "title": "Python CPU 사용률",
@@ -340,17 +448,20 @@
         "expressionLabels": [
           "host",
           "process"
-        ]
+        ],
+        "id": "pvm_cpu"
       },
       {
         "title": "Python 메모리 사용률",
         "expressionLabels": [
           "host",
           "process"
-        ]
+        ],
+        "id": "pvm_mem"
       },
       {
-        "title": "Python 스레드 수"
+        "title": "Python 스레드 수",
+        "id": "pvm_threads"
       },
       {
         "title": "Python GC 수",
@@ -358,27 +469,33 @@
           "gen 0",
           "gen 1",
           "gen 2"
-        ]
+        ],
+        "id": "pvm_gc"
       },
       {
-        "title": "Python GC 시간"
+        "title": "Python GC 시간",
+        "id": "pvm_gc_time"
       },
       {
         "title": "Ruby CPU 사용량",
-        "tip": "Ruby 에이전트: 프로세스 CPU (백분율)."
+        "tip": "Ruby 에이전트: 프로세스 CPU (백분율).",
+        "id": "ruby_cpu"
       },
       {
-        "title": "Ruby 메모리 (RSS)"
+        "title": "Ruby 메모리 (RSS)",
+        "id": "ruby_mem_rss"
       },
       {
-        "title": "Ruby 메모리 사용량"
+        "title": "Ruby 메모리 사용량",
+        "id": "ruby_mem_usage"
       },
       {
         "title": "Ruby 스레드 상태",
         "expressionLabels": [
           "active",
           "running"
-        ]
+        ],
+        "id": "ruby_threads"
       },
       {
         "title": "Ruby GC 수",
@@ -386,149 +503,215 @@
           "전체",
           "마이너",
           "메이저"
-        ]
+        ],
+        "id": "ruby_gc"
       },
       {
-        "title": "Ruby GC 시간"
+        "title": "Ruby GC 시간",
+        "id": "ruby_gc_time"
       },
       {
-        "title": "Ruby Heap 사용량"
+        "title": "Ruby Heap 사용량",
+        "id": "ruby_heap_usage"
       },
       {
         "title": "Ruby Heap 슬롯",
         "expressionLabels": [
           "활성",
           "사용 가능"
-        ]
+        ],
+        "id": "ruby_heap_slots"
       },
       {
         "title": "PHP CPU 사용률",
-        "tip": "PHP 에이전트: 부모 PHP 프로세스 (getppid()) CPU 사용률 (%), /proc에서 샘플링."
+        "tip": "PHP 에이전트: 부모 PHP 프로세스 (getppid()) CPU 사용률 (%), /proc에서 샘플링.",
+        "id": "php_cpu"
       },
       {
         "title": "PHP 메모리 사용량",
-        "tip": "PHP 에이전트: 부모 PHP 프로세스 (getppid()) 상주 메모리 (MB, /proc VmRSS)."
+        "tip": "PHP 에이전트: 부모 PHP 프로세스 (getppid()) 상주 메모리 (MB, /proc VmRSS).",
+        "id": "php_mem"
       },
       {
         "title": "PHP 메모리 피크",
-        "tip": "PHP 에이전트: 부모 PHP 프로세스 (getppid()) 피크 상주 메모리 (MB, /proc VmHWM)."
+        "tip": "PHP 에이전트: 부모 PHP 프로세스 (getppid()) 피크 상주 메모리 (MB, /proc VmHWM).",
+        "id": "php_mem_peak"
       },
       {
         "title": "PHP 가상 메모리",
-        "tip": "PHP 에이전트: 부모 PHP 프로세스 (getppid()) 가상 메모리 (MB, /proc VmSize)."
+        "tip": "PHP 에이전트: 부모 PHP 프로세스 (getppid()) 가상 메모리 (MB, /proc VmSize).",
+        "id": "php_vmsize"
       },
       {
         "title": "PHP 스레드 수",
-        "tip": "PHP 에이전트: 부모 PHP 프로세스 (getppid()) OS 스레드 수 (/proc Threads)."
+        "tip": "PHP 에이전트: 부모 PHP 프로세스 (getppid()) OS 스레드 수 (/proc Threads).",
+        "id": "php_threads"
       },
       {
         "title": "PHP 열린 FD 수",
-        "tip": "PHP 에이전트: 부모 PHP 프로세스 (getppid()) 열린 file descriptor 수 (/proc/pid/fd)."
+        "tip": "PHP 에이전트: 부모 PHP 프로세스 (getppid()) 열린 file descriptor 수 (/proc/pid/fd).",
+        "id": "php_open_fds"
       }
     ],
     "endpoint": [
       {
-        "title": "트래픽"
+        "title": "트래픽",
+        "id": "endpoint_cpm_line"
       },
       {
-        "title": "응답 시간"
+        "title": "응답 시간",
+        "id": "endpoint_resp_line"
       },
       {
-        "title": "성공률"
+        "title": "성공률",
+        "id": "endpoint_sla_line"
       },
       {
-        "title": "응답 시간 백분위"
+        "title": "응답 시간 백분위",
+        "id": "endpoint_percentile"
       },
       {
         "title": "MQ 평균 소비 지연 시간",
-        "tip": "엔드포인트 단위 소비 지연 시간 — 메시지 큐 트래픽을 처리하는 엔드포인트에서만 채워집니다."
+        "tip": "엔드포인트 단위 소비 지연 시간 — 메시지 큐 트래픽을 처리하는 엔드포인트에서만 채워집니다.",
+        "id": "endpoint_mq_consume_latency"
       }
     ]
   },
   "topology": {
     "nodeMetrics": [
       {
-        "label": "RPM"
+        "label": "RPM",
+        "id": "cpm"
       },
       {
-        "label": "SLA"
+        "label": "SLA",
+        "id": "sla"
       },
       {
-        "label": "지연 시간"
+        "label": "지연 시간",
+        "id": "respTime"
       }
     ],
     "linkServerMetrics": [
       {
-        "label": "RPM"
+        "label": "RPM",
+        "id": "cpm"
       },
       {
-        "label": "평균 응답 시간"
+        "label": "평균 응답 시간",
+        "id": "respTime"
       },
       {
-        "label": "p95"
+        "label": "p95",
+        "id": "p95"
       },
       {
-        "label": "SLA"
+        "label": "SLA",
+        "id": "sla"
       }
     ],
     "linkClientMetrics": [
       {
-        "label": "RPM"
+        "label": "RPM",
+        "id": "cpm"
       },
       {
-        "label": "평균 응답 시간"
+        "label": "평균 응답 시간",
+        "id": "respTime"
       },
       {
-        "label": "p95"
+        "label": "p95",
+        "id": "p95"
       },
       {
-        "label": "SLA"
+        "label": "SLA",
+        "id": "sla"
       }
     ],
     "instanceTopology": {
       "nodeMetrics": [
-        { "label": "RPM" },
-        { "label": "SLA" },
-        { "label": "지연 시간" }
+        {
+          "label": "RPM",
+          "id": "cpm"
+        },
+        {
+          "label": "SLA",
+          "id": "sla"
+        },
+        {
+          "label": "지연 시간",
+          "id": "respTime"
+        }
       ],
       "linkServerMetrics": [
-        { "label": "RPM" },
-        { "label": "평균 응답 시간" },
-        { "label": "p95" },
-        { "label": "SLA" }
+        {
+          "label": "RPM",
+          "id": "cpm"
+        },
+        {
+          "label": "평균 응답 시간",
+          "id": "respTime"
+        },
+        {
+          "label": "p95",
+          "id": "p95"
+        },
+        {
+          "label": "SLA",
+          "id": "sla"
+        }
       ],
       "linkClientMetrics": [
-        { "label": "RPM" },
-        { "label": "평균 응답 시간" },
-        { "label": "p95" },
-        { "label": "SLA" }
+        {
+          "label": "RPM",
+          "id": "cpm"
+        },
+        {
+          "label": "평균 응답 시간",
+          "id": "respTime"
+        },
+        {
+          "label": "p95",
+          "id": "p95"
+        },
+        {
+          "label": "SLA",
+          "id": "sla"
+        }
       ]
     }
   },
   "endpointDependency": {
     "nodeMetrics": [
       {
-        "label": "RPM"
+        "label": "RPM",
+        "id": "cpm"
       },
       {
-        "label": "SLA"
+        "label": "SLA",
+        "id": "sla"
       },
       {
-        "label": "지연 시간"
+        "label": "지연 시간",
+        "id": "respTime"
       }
     ],
     "linkMetrics": [
       {
-        "label": "RPM"
+        "label": "RPM",
+        "id": "cpm"
       },
       {
-        "label": "평균 응답 시간"
+        "label": "평균 응답 시간",
+        "id": "respTime"
       },
       {
-        "label": "p95"
+        "label": "p95",
+        "id": "p95"
       },
       {
-        "label": "SLA"
+        "label": "SLA",
+        "id": "sla"
       }
     ]
   },

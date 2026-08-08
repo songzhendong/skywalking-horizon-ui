@@ -37,24 +37,62 @@
  *      catalogs are a valid and common state — they ship strictly
  *      better UX than English-only.
  *
+ * Array alignment is **dual-read**:
+ *   - When any overlay entry carries a string `id`, entries are matched
+ *     to source widgets by that id (inserting widgets mid-array cannot
+ *     shift translations onto the wrong panel).
+ *   - Otherwise the legacy index pairing `overlay[i] ↔ source[i]` is
+ *     used so unmigrated catalogs keep working.
+ *
  * Non-string leaves (numbers, booleans, null) are passed through
- * unchanged. The overlay's job is text only.
+ * unchanged. The overlay's job is text only. Source `id` values are
+ * never overwritten by the overlay.
  */
+
+function overlayEntryId(entry: unknown): string | null {
+  if (!entry || typeof entry !== 'object' || Array.isArray(entry)) return null;
+  const id = (entry as Record<string, unknown>).id;
+  return typeof id === 'string' && id.length > 0 ? id : null;
+}
+
+function sourceEntryId(entry: unknown): string | null {
+  return overlayEntryId(entry);
+}
 
 export function mergeLocalizedNode(source: unknown, overlay: unknown): unknown {
   if (Array.isArray(source)) {
     if (!Array.isArray(overlay)) return source;
-    // Source decides array length; overlay entries at indices beyond
-    // the source are ignored. Sparse overlay entries (undefined /
-    // missing index) are handled by recursing into mergeLocalizedNode,
-    // which falls through to the source.
-    return source.map((item, i) => mergeLocalizedNode(item, overlay[i]));
+    const byId = new Map<string, unknown>();
+    for (const entry of overlay) {
+      const id = overlayEntryId(entry);
+      if (id) byId.set(id, entry);
+    }
+    const useIds = byId.size > 0;
+    return source.map((item, i) => {
+      if (useIds) {
+        const sid = sourceEntryId(item);
+        if (sid && byId.has(sid)) {
+          return mergeLocalizedNode(item, byId.get(sid));
+        }
+        // Id-mode: no entry for this widget → English. Do not fall back to
+        // overlay[i] — that reintroduces index shift after a mid-array insert.
+        return item;
+      }
+      // Legacy index pairing when the overlay carries no ids.
+      return mergeLocalizedNode(item, overlay[i]);
+    });
   }
   if (source !== null && typeof source === 'object') {
     if (!overlay || typeof overlay !== 'object' || Array.isArray(overlay)) return source;
     const ovl = overlay as Record<string, unknown>;
     const out: Record<string, unknown> = {};
     for (const [k, v] of Object.entries(source as Record<string, unknown>)) {
+      // Widget identity is owned by the source template — never take it
+      // from a translation overlay (stale / wrong id would break matching).
+      if (k === 'id') {
+        out[k] = v;
+        continue;
+      }
       out[k] = mergeLocalizedNode(v, ovl[k]);
     }
     return out;
