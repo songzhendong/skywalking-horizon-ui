@@ -84,8 +84,8 @@ function seedNode(source: unknown, lex: Record<string, string>): unknown | undef
     const out = source.map((entry) => seedNode(entry, lex));
     if (out.every((e) => e === undefined)) return undefined;
     // Pad sparse entries with `null` so positional alignment with the
-    // source is preserved — the runtime merger reads `overlay[i]` and
-    // treats `null` as "fall through to source at this index."
+    // source is preserved for legacy index merge. Entries that seed with
+    // translations also carry `id` (see below) for id-based merge.
     return out.map((e) => (e === undefined ? null : e));
   }
   if (source !== null && typeof source === 'object') {
@@ -120,6 +120,11 @@ function seedNode(source: unknown, lex: Record<string, string>): unknown | undef
         const r = seedNode(v, lex);
         if (r !== undefined) out[k] = r;
       }
+    }
+    // Carry source widget id so runtime merge can align by id. Only emit
+    // when this object already has translated leaves (empty stubs stay pruned).
+    if (Object.keys(out).length > 0 && typeof rec.id === 'string' && rec.id.length > 0) {
+      out.id = rec.id;
     }
     return Object.keys(out).length > 0 ? out : undefined;
   }

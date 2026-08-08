@@ -373,6 +373,60 @@ describe('bootSeed — translation overlay seeding', () => {
     await bootSeed(depsFor(oap.client));
     expect(writes(oap.calls)).toEqual([]);
   });
+
+  it('stamps widget ids onto a short GENERAL zh-CN overlay at boot', async () => {
+    const { readFileSync } = await import('node:fs');
+    const { dirname, join } = await import('node:path');
+    const { fileURLToPath } = await import('node:url');
+    const { nodejsRuntimeMetersV2InsertAt } = await import('./stamp-widget-ids.js');
+
+    const layersDir = join(dirname(fileURLToPath(import.meta.url)), '../../bundled_templates/layers');
+    const source = JSON.parse(readFileSync(join(layersDir, 'general.json'), 'utf8'));
+    const bundledZh = JSON.parse(
+      readFileSync(join(layersDir, 'general.i18n.zh-CN.json'), 'utf8'),
+    );
+    const insertAt = nodejsRuntimeMetersV2InsertAt(source);
+    const oldZh = structuredClone(bundledZh) as {
+      dashboards: { instance: Array<{ id?: string; title?: string }> };
+    };
+    for (const e of oldZh.dashboards.instance) delete e.id;
+    oldZh.dashboards.instance.splice(insertAt, 6);
+    oldZh.dashboards.instance[3]!.title = '定制进程 CPU';
+
+    const generalSrc: BundledTemplate = { kind: 'layer', key: 'GENERAL', content: source };
+    const zhOverlay: BundledOverlay = {
+      kind: 'layer',
+      key: 'GENERAL',
+      locale: 'zh-CN',
+      content: bundledZh,
+    };
+    const oap = fakeOap({
+      rows: [
+        remoteRow('oap-GENERAL', cfgOf(generalSrc)),
+        remoteRow(
+          'oap-zh',
+          serializeEnvelope(buildOverlayEnvelope('layer', 'GENERAL', 'zh-CN', oldZh)),
+        ),
+      ],
+    });
+
+    await bootSeed(
+      depsFor(oap.client, {
+        bundled: () => [generalSrc],
+        bundledOverlays: () => [zhOverlay],
+      }),
+    );
+
+    expect(writes(oap.calls)).toEqual(['update:oap-zh']);
+    const updated = JSON.parse(oap.rows.find((r) => r.id === 'oap-zh')!.configuration) as {
+      content: typeof oldZh;
+    };
+    const inst = updated.content.dashboards.instance;
+    expect(inst[3]?.title).toBe('定制进程 CPU');
+    expect(inst[3]?.id).toBe(source.dashboards.instance[3].id);
+    // JVM slot kept its translation and received the post-insert source id.
+    expect(inst[insertAt]?.id).toBe('jvm_cpu');
+  });
 });
 
 describe('createAndConfirm — write plus read-after-write confirmation', () => {

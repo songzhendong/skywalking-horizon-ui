@@ -42,6 +42,8 @@ import type { UITemplateClient } from '@skywalking-horizon-ui/api-client';
 import {
   buildEnvelope,
   buildOverlayEnvelope,
+  formatName,
+  formatOverlayName,
   isOverlayName,
   parseEnvelope,
   serializeEnvelope,
@@ -49,6 +51,7 @@ import {
 } from './names.js';
 import { iterateBundledOverlays } from './aggregator.js';
 import { templateIdentityIssue } from './identity.js';
+import { stampWidgetIdsOntoOverlay } from './stamp-widget-ids.js';
 
 export interface BundledTemplate {
   kind: TemplateKind;
@@ -366,16 +369,7 @@ async function runOnce(deps: SyncDeps, opts: RunOptions): Promise<SyncStatus> {
   if (opts.write) {
     const seedCount = await seedMissing(deps, bundledRows, parsedRemote.byName);
     const overlaySeedCount = await seedMissingOverlays(deps, parsedRemote.byName);
-    // Duplicates are REPORTED at boot, never resolved here. Retiring a row is
-    // irreversible for that copy's CONTENT (OAP has no delete, only disable;
-    // the admin Reactivate control re-enables a name from the bundled default,
-    // it does not bring a disabled copy's content back), and the rule reads an
-    // operator edit from a pristine seed — so two instances on different
-    // Horizon versions, mid rolling-upgrade, can each judge the other's
-    // survivor to be the loser and between them disable every row for a name.
-    // A restart must never be able to do that unattended. The conflict is
-    // surfaced on the sync status instead, and an admin resolves it
-    // deliberately from the Dashboard-templates banner.
+    // Re-list before id-stamping so freshly seeded source rows are visible.
     if (seedCount > 0 || overlaySeedCount > 0) {
       try {
         const refreshed = await deps.client.list();
@@ -388,6 +382,32 @@ async function runOnce(deps: SyncDeps, opts: RunOptions): Promise<SyncStatus> {
         deps.logger.warn(
           { err: errMsg(err) },
           'OAP UI-template re-list after seed failed — sync status may lag the next runtime pull',
+        );
+      }
+    }
+    const overlayStampCount = await stampOverlayWidgetIds(deps, parsedRemote.byName);
+    // Duplicates are REPORTED at boot, never resolved here. Retiring a row is
+    // irreversible for that copy's CONTENT (OAP has no delete, only disable;
+    // the admin Reactivate control re-enables a name from the bundled default,
+    // it does not bring a disabled copy's content back), and the rule reads an
+    // operator edit from a pristine seed — so two instances on different
+    // Horizon versions, mid rolling-upgrade, can each judge the other's
+    // survivor to be the loser and between them disable every row for a name.
+    // A restart must never be able to do that unattended. The conflict is
+    // surfaced on the sync status instead, and an admin resolves it
+    // deliberately from the Dashboard-templates banner.
+    if (overlayStampCount > 0) {
+      try {
+        const refreshed = await deps.client.list();
+        parsedRemote = parseRemoteRows(refreshed, deps.logger);
+        deps.logger.info(
+          { overlayStampCount },
+          'OAP translation overlay widget-id stamp complete',
+        );
+      } catch (err) {
+        deps.logger.warn(
+          { err: errMsg(err) },
+          'OAP UI-template re-list after overlay id stamp failed — sync status may lag the next runtime pull',
         );
       }
     }
@@ -760,6 +780,69 @@ async function seedMissingOverlays(
       deps.logger.warn(
         { name: envelope.name, err: errMsg(err) },
         'OAP translation overlay seed failed — will retry at next BFF boot',
+      );
+    }
+  }
+  return count;
+}
+
+/**
+ * Upgrade path for id-based localization: stamp source widget ids onto
+ * existing OAP overlays (including short overlays left by a mid-array
+ * widget insert) so `mergeLocalizedNode` can resolve by id. Preserves
+ * every pre-existing translation leaf. No-op when overlays already carry
+ * matching ids or the shortfall is not a known insert shape.
+ */
+async function stampOverlayWidgetIds(
+  deps: SyncDeps,
+  remote: Map<string, RemoteRow>,
+): Promise<number> {
+  if (!deps.bundledOverlays) return 0;
+  let count = 0;
+  for (const ov of deps.bundledOverlays()) {
+    const overlayName = formatOverlayName(ov.kind, ov.key, ov.locale);
+    const remoteOverlay = remote.get(overlayName);
+    if (!remoteOverlay || remoteOverlay.disabled) continue;
+
+    const sourceName = formatName(ov.kind, ov.key);
+    const remoteSource = remote.get(sourceName);
+    let sourceContent: unknown = null;
+    if (remoteSource && !remoteSource.disabled) {
+      sourceContent = parseEnvelope(remoteSource.configuration)?.content ?? null;
+    }
+    if (sourceContent === null) {
+      for (const b of deps.bundled()) {
+        if (b.kind === ov.kind && b.key === ov.key) {
+          sourceContent = b.content;
+          break;
+        }
+      }
+    }
+    if (sourceContent === null) continue;
+
+    const oapEnv = parseEnvelope(remoteOverlay.configuration);
+    if (!oapEnv) continue;
+    const { content: stampedContent, stamped } = stampWidgetIdsOntoOverlay(
+      sourceContent,
+      oapEnv.content,
+    );
+    if (!stamped) continue;
+
+    const configuration = serializeEnvelope(
+      buildOverlayEnvelope(ov.kind, ov.key, ov.locale, stampedContent),
+    );
+    try {
+      await updateAndConfirm(deps.client, remoteOverlay.id, configuration, deps.logger);
+      remoteOverlay.configuration = configuration;
+      count++;
+      deps.logger.info(
+        { name: overlayName, id: remoteOverlay.id },
+        'OAP translation overlay stamped with widget ids',
+      );
+    } catch (err) {
+      deps.logger.warn(
+        { name: overlayName, err: errMsg(err) },
+        'OAP translation overlay id stamp failed — will retry at next BFF boot',
       );
     }
   }

@@ -173,3 +173,52 @@ export function setAtPath(obj: Record<string, unknown> | unknown[], segments: Ar
     (cur as Record<string, unknown>)[last] = value;
   }
 }
+
+/**
+ * Copy source widget `id`s onto parallel overlay array entries so a
+ * Translations push keeps id-based merge working. Mutates `overlay`.
+ * Only stamps when both sides are arrays and the source entry has a
+ * string id; sparse / missing overlay slots are left alone.
+ */
+export function stampWidgetIdsFromSource(source: unknown, overlay: unknown): void {
+  if (Array.isArray(source) && Array.isArray(overlay)) {
+    const sourceHasIds = source.some(
+      (e) =>
+        !!e &&
+        typeof e === 'object' &&
+        !Array.isArray(e) &&
+        typeof (e as Record<string, unknown>).id === 'string',
+    );
+    if (sourceHasIds) {
+      for (let i = 0; i < overlay.length && i < source.length; i++) {
+        const src = source[i];
+        const ov = overlay[i];
+        if (!src || typeof src !== 'object' || Array.isArray(src)) continue;
+        if (!ov || typeof ov !== 'object' || Array.isArray(ov)) continue;
+        const id = (src as Record<string, unknown>).id;
+        if (typeof id === 'string' && id.length > 0) {
+          (ov as Record<string, unknown>).id = id;
+        }
+      }
+      return;
+    }
+    for (let i = 0; i < source.length; i++) {
+      stampWidgetIdsFromSource(source[i], overlay[i]);
+    }
+    return;
+  }
+  if (
+    source !== null &&
+    typeof source === 'object' &&
+    !Array.isArray(source) &&
+    overlay !== null &&
+    typeof overlay === 'object' &&
+    !Array.isArray(overlay)
+  ) {
+    const src = source as Record<string, unknown>;
+    const ovl = overlay as Record<string, unknown>;
+    for (const k of Object.keys(src)) {
+      if (k in ovl) stampWidgetIdsFromSource(src[k], ovl[k]);
+    }
+  }
+}

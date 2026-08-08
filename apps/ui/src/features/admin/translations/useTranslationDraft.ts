@@ -40,6 +40,7 @@ import {
   walkTranslatable,
   setAtPath,
   getAtPath,
+  stampWidgetIdsFromSource,
   type TranslatableField,
 } from '@/features/admin/_shared/translatableFields';
 import { SUPPORTED_LOCALES, type Locale } from '@/i18n';
@@ -182,7 +183,10 @@ export function useTranslationDraft(args: UseTranslationDraftArgs): UseTranslati
       const v = m[f.path];
       if (v && v.length > 0) setAtPath(overlay, f.segments, v);
     }
-    return Object.keys(overlay).length === 0 ? null : overlay;
+    if (Object.keys(overlay).length === 0) return null;
+    // Keep widget ids on pushed overlays so BFF id-based merge stays aligned.
+    stampWidgetIdsFromSource(eff.source, overlay);
+    return overlay;
   }
 
   /** The source as the preview should render it — the target locale's
@@ -198,13 +202,36 @@ export function useTranslationDraft(args: UseTranslationDraftArgs): UseTranslati
   function deepMerge(src: unknown, ovl: unknown): unknown {
     if (Array.isArray(src)) {
       if (!Array.isArray(ovl)) return src;
-      return src.map((item, i) => deepMerge(item, ovl[i]));
+      const byId = new Map<string, unknown>();
+      for (const entry of ovl) {
+        if (entry && typeof entry === 'object' && !Array.isArray(entry)) {
+          const id = (entry as Record<string, unknown>).id;
+          if (typeof id === 'string' && id.length > 0) byId.set(id, entry);
+        }
+      }
+      const useIds = byId.size > 0;
+      return src.map((item, i) => {
+        if (useIds) {
+          if (item && typeof item === 'object' && !Array.isArray(item)) {
+            const sid = (item as Record<string, unknown>).id;
+            if (typeof sid === 'string' && byId.has(sid)) {
+              return deepMerge(item, byId.get(sid));
+            }
+          }
+          return item;
+        }
+        return deepMerge(item, ovl[i]);
+      });
     }
     if (src !== null && typeof src === 'object') {
       if (!ovl || typeof ovl !== 'object' || Array.isArray(ovl)) return src;
       const ovlMap = ovl as Record<string, unknown>;
       const out: Record<string, unknown> = {};
       for (const [k, v] of Object.entries(src as Record<string, unknown>)) {
+        if (k === 'id') {
+          out[k] = v;
+          continue;
+        }
         out[k] = deepMerge(v, ovlMap[k]);
       }
       return out;
