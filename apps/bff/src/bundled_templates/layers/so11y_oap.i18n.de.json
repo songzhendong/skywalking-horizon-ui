@@ -187,16 +187,16 @@
       {
         "id": "alarm_grpc_delivery",
         "title": "Alarm-gRPC-Zustellung / min",
-        "tip": "gRPC-Alarm-Hook-Zustellungen nach Nachrichtenart (Alarm/Recovery) und Ergebnis: Erfolg oder Ursache des Fehlers."
+        "tip": "gRPC-Alarm-Hook-Zustellungen nach Nachrichtenart (alarm/recovery) und Ergebnis: Erfolg oder der Grund, warum die Zustellung fehlschlug."
       },
       {
         "id": "alarm_grpc_delivery_messages",
-        "title": "Alarm-gRPC-Nachrichten / min",
+        "title": "Nachrichten der Alarm-gRPC-Zustellung / min",
         "tip": "gRPC-Alarm-Hook-Nachrichten nach Nachrichtenart und Ergebnis."
       },
       {
         "id": "alarm_grpc_delivery_latency",
-        "title": "Alarm-gRPC-Zustellungslatenz (ms)"
+        "title": "Latenz der Alarm-gRPC-Zustellung (ms)"
       }
     ]
   },

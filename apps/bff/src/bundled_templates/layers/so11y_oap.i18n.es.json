@@ -186,17 +186,17 @@
       },
       {
         "id": "alarm_grpc_delivery",
-        "title": "Entrega de alarma gRPC / min",
-        "tip": "Entregas del hook gRPC de alarma por tipo de mensaje (alarm/recovery) y resultado: éxito, o por qué falló."
+        "title": "Entrega de alarmas gRPC / min",
+        "tip": "Entregas del hook de alarma gRPC por tipo de mensaje (alarm/recovery) y resultado: éxito, o el motivo por el que falló la entrega."
       },
       {
         "id": "alarm_grpc_delivery_messages",
-        "title": "Mensajes de alarma gRPC / min",
-        "tip": "Mensajes del hook gRPC de alarma por tipo de mensaje y resultado."
+        "title": "Mensajes de entrega de alarmas gRPC / min",
+        "tip": "Mensajes del hook de alarma gRPC por tipo de mensaje y resultado."
       },
       {
         "id": "alarm_grpc_delivery_latency",
-        "title": "Latencia de entrega gRPC de alarma (ms)"
+        "title": "Latencia de entrega de alarmas gRPC (ms)"
       }
     ]
   },

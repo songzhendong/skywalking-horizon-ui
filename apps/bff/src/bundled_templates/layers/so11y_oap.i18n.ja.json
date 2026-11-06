@@ -186,17 +186,17 @@
       },
       {
         "id": "alarm_grpc_delivery",
-        "title": "アラーム gRPC 配信 / 分",
-        "tip": "メッセージ種別（alarm/recovery）と結果ごとの gRPC アラームフック配信回数：成功、または失敗理由。"
+        "title": "アラート gRPC 配信 / 分",
+        "tip": "メッセージ種別（alarm/recovery）・結果別の gRPC アラートフック配信数。成功、または配信に失敗した理由。"
       },
       {
         "id": "alarm_grpc_delivery_messages",
-        "title": "アラーム gRPC メッセージ数 / 分",
-        "tip": "メッセージ種別と結果ごとの gRPC アラームフックメッセージ数。"
+        "title": "アラート gRPC メッセージ数 / 分",
+        "tip": "メッセージ種別・結果別の gRPC アラートフックメッセージ数。"
       },
       {
         "id": "alarm_grpc_delivery_latency",
-        "title": "アラーム gRPC 配信レイテンシ (ms)"
+        "title": "アラート gRPC 配信レイテンシ (ms)"
       }
     ]
   },

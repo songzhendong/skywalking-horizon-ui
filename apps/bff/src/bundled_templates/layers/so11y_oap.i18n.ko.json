@@ -186,17 +186,17 @@
       },
       {
         "id": "alarm_grpc_delivery",
-        "title": "알람 gRPC 전달 / 분",
-        "tip": "메시지 종류(alarm/recovery)와 결과별 gRPC 알람 훅 전달 횟수: 성공, 또는 실패 원인."
+        "title": "알람 gRPC 전송 / 분",
+        "tip": "메시지 종류(alarm/recovery)별, 결과별 gRPC 알람 훅 전송 수입니다. 성공 또는 전송에 실패한 이유를 보여 줍니다."
       },
       {
         "id": "alarm_grpc_delivery_messages",
         "title": "알람 gRPC 메시지 수 / 분",
-        "tip": "메시지 종류와 결과별 gRPC 알람 훅 메시지 수."
+        "tip": "메시지 종류별, 결과별 gRPC 알람 훅 메시지 수입니다."
       },
       {
         "id": "alarm_grpc_delivery_latency",
-        "title": "알람 gRPC 전달 지연 (ms)"
+        "title": "알람 gRPC 전송 지연 시간 (ms)"
       }
     ]
   },

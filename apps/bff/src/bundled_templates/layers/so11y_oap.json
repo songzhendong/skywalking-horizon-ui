@@ -383,7 +383,7 @@
       {
         "id": "alarm_grpc_delivery",
         "title": "Alarm gRPC Delivery / min",
-        "tip": "gRPC alarm hook deliveries by message kind (alarm/recovery) and result: success, or why the delivery failed.",
+        "tip": "gRPC alarm hook deliveries per message kind (alarm/recovery) and result: success, or why the delivery failed.",
         "type": "line",
         "expressions": [
           "meter_oap_instance_alarm_grpc_delivery_count"
@@ -399,7 +399,7 @@
       {
         "id": "alarm_grpc_delivery_messages",
         "title": "Alarm gRPC Delivery Messages / min",
-        "tip": "gRPC alarm hook messages by message kind and result.",
+        "tip": "gRPC alarm hook messages per message kind and result.",
         "type": "line",
         "expressions": [
           "meter_oap_instance_alarm_grpc_delivery_messages_count"
