@@ -183,6 +183,20 @@
       {
         "id": "alarm_delivery_latency",
         "title": "Latence d'envoi d'alarmes (ms)"
+      },
+      {
+        "id": "alarm_grpc_delivery",
+        "title": "Livraison d'alarme gRPC / min",
+        "tip": "Livraisons du hook gRPC d'alarme par type de message (alarm/recovery) et résultat : succès, ou cause de l'échec."
+      },
+      {
+        "id": "alarm_grpc_delivery_messages",
+        "title": "Messages d'alarme gRPC / min",
+        "tip": "Messages du hook gRPC d'alarme par type de message et résultat."
+      },
+      {
+        "id": "alarm_grpc_delivery_latency",
+        "title": "Latence de livraison gRPC d'alarme (ms)"
       }
     ]
   },

@@ -183,6 +183,20 @@
       {
         "id": "alarm_delivery_latency",
         "title": "Latenz der Alarmzustellung (ms)"
+      },
+      {
+        "id": "alarm_grpc_delivery",
+        "title": "Alarm-gRPC-Zustellung / min",
+        "tip": "gRPC-Alarm-Hook-Zustellungen nach Nachrichtenart (Alarm/Recovery) und Ergebnis: Erfolg oder Ursache des Fehlers."
+      },
+      {
+        "id": "alarm_grpc_delivery_messages",
+        "title": "Alarm-gRPC-Nachrichten / min",
+        "tip": "gRPC-Alarm-Hook-Nachrichten nach Nachrichtenart und Ergebnis."
+      },
+      {
+        "id": "alarm_grpc_delivery_latency",
+        "title": "Alarm-gRPC-Zustellungslatenz (ms)"
       }
     ]
   },

@@ -104,6 +104,16 @@ How the alarms this node raises reach their HTTP hooks: Webhook, Slack, WeCom, D
 
 - **Alarm Delivery Latency (ms)** — p50 / p75 / p90 / p95 / p99 delivery time per channel (`meter_oap_instance_alarm_http_delivery_latency_percentile`).
 
+### Alarm gRPC delivery
+
+How the alarms this node raises reach its gRPC hook. These widgets are shown only on an OAP node that has delivered a gRPC alarm; each line is one `message_kind` (`alarm` or `recovery`).
+
+- **Alarm gRPC Delivery / min** — deliveries per minute by message kind and result: **success**, or why a delivery failed — **timeout**, **unavailable**, **error** or **interrupted** (`meter_oap_instance_alarm_grpc_delivery_count`).
+
+- **Alarm gRPC Delivery Messages / min** — messages included in those deliveries by message kind and result (`meter_oap_instance_alarm_grpc_delivery_messages_count`).
+
+- **Alarm gRPC Delivery Latency (ms)** — p50 / p75 / p90 / p95 / p99 delivery time per message kind (`meter_oap_instance_alarm_grpc_delivery_latency_percentile`).
+
 ### Storage backend
 
 Write latency against whichever storage backend this OAP is configured with. These two widgets are storage-specific and only render when the matching backend is in use — a BanyanDB deployment shows the BanyanDB widget, an Elasticsearch deployment shows the Elasticsearch widget.
@@ -124,7 +134,7 @@ The SO11Y_OAP dashboard is a pure consumer of what OAP reports about itself — 
 
 - **Ingestion metrics** — the trace, mesh, OTEL, K8s ALS, watermark, and Zipkin families (`meter_oap_instance_trace_*`, `meter_oap_instance_mesh_*`, `meter_oap_otel_*`, `meter_oap_instance_k8s_als_*`, `meter_oap_instance_watermark_circuit_breaker_*`, `meter_oap_instance_spans_dropped_count`). A pipeline that isn't running on a given node simply reports nothing, and its widget reads `no data`.
 
-- **Alarm delivery metrics** — `meter_oap_instance_alarm_http_delivery_count`, `_status_count` and `_latency_percentile`, reported by OAP 11.1.0 and later once a node delivers an HTTP alarm.
+- **Alarm delivery metrics** — `meter_oap_instance_alarm_http_delivery_count`, `_status_count` and `_latency_percentile`, reported by OAP 11.1.0 and later once a node delivers an HTTP alarm; and `meter_oap_instance_alarm_grpc_delivery_count`, `_messages_count` and `_latency_percentile`, reported by OAP 11.2.0 and later once a node delivers a gRPC alarm.
 
 - **Storage metrics** — `meter_oap_banyandb_write_latency_percentile` **or** `meter_oap_elasticsearch_write_latency_percentile`, depending on the configured storage backend; only the matching widget renders.
 

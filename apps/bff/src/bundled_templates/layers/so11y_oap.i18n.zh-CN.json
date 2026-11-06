@@ -187,6 +187,20 @@
       {
         "id": "alarm_delivery_latency",
         "title": "告警投递延迟（ms）"
+      },
+      {
+        "id": "alarm_grpc_delivery",
+        "title": "告警 gRPC 投递 / 分钟",
+        "tip": "各消息种类（告警/恢复）的 gRPC 告警钩子投递次数，按结果区分：成功，或投递失败的原因。"
+      },
+      {
+        "id": "alarm_grpc_delivery_messages",
+        "title": "告警 gRPC 投递消息数 / 分钟",
+        "tip": "各消息种类的 gRPC 告警钩子消息数，按结果区分。"
+      },
+      {
+        "id": "alarm_grpc_delivery_latency",
+        "title": "告警 gRPC 投递延迟（ms）"
       }
     ]
   }
