@@ -169,6 +169,34 @@
       {
         "id": "zipkin_drop",
         "title": "Zipkin-Spans verworfen"
+      },
+      {
+        "id": "alarm_delivery",
+        "title": "Alarmzustellung / min",
+        "tip": "HTTP-Alarm-Hook-Zustellungen pro Kanal und Ergebnis: Erfolg oder der Grund, warum die Zustellung fehlschlug."
+      },
+      {
+        "id": "alarm_delivery_status",
+        "title": "Antworten der Alarmzustellung / min",
+        "tip": "HTTP-Antworten der Alarm-Hooks pro Kanal und Statusklasse."
+      },
+      {
+        "id": "alarm_delivery_latency",
+        "title": "Latenz der Alarmzustellung (ms)"
+      },
+      {
+        "id": "alarm_grpc_delivery",
+        "title": "Alarm-gRPC-Zustellung / min",
+        "tip": "gRPC-Alarm-Hook-Zustellungen nach Nachrichtenart (alarm/recovery) und Ergebnis: Erfolg oder der Grund, warum die Zustellung fehlschlug."
+      },
+      {
+        "id": "alarm_grpc_delivery_messages",
+        "title": "Nachrichten der Alarm-gRPC-Zustellung / min",
+        "tip": "gRPC-Alarm-Hook-Nachrichten nach Nachrichtenart und Ergebnis."
+      },
+      {
+        "id": "alarm_grpc_delivery_latency",
+        "title": "Latenz der Alarm-gRPC-Zustellung (ms)"
       }
     ]
   },

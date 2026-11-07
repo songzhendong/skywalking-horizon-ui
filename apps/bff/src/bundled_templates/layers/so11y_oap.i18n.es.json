@@ -169,6 +169,34 @@
       {
         "id": "zipkin_drop",
         "title": "Spans Zipkin descartados"
+      },
+      {
+        "id": "alarm_delivery",
+        "title": "Entrega de alarmas / min",
+        "tip": "Entregas de hooks de alarma HTTP por canal y resultado: éxito, o el motivo por el que falló la entrega."
+      },
+      {
+        "id": "alarm_delivery_status",
+        "title": "Respuestas de entrega de alarmas / min",
+        "tip": "Respuestas HTTP de los hooks de alarma por canal y clase de estado."
+      },
+      {
+        "id": "alarm_delivery_latency",
+        "title": "Latencia de entrega de alarmas (ms)"
+      },
+      {
+        "id": "alarm_grpc_delivery",
+        "title": "Entrega de alarmas gRPC / min",
+        "tip": "Entregas del hook de alarma gRPC por tipo de mensaje (alarm/recovery) y resultado: éxito, o el motivo por el que falló la entrega."
+      },
+      {
+        "id": "alarm_grpc_delivery_messages",
+        "title": "Mensajes de entrega de alarmas gRPC / min",
+        "tip": "Mensajes del hook de alarma gRPC por tipo de mensaje y resultado."
+      },
+      {
+        "id": "alarm_grpc_delivery_latency",
+        "title": "Latencia de entrega de alarmas gRPC (ms)"
       }
     ]
   },

@@ -169,6 +169,34 @@
       {
         "id": "zipkin_drop",
         "title": "Zipkin スパン破棄"
+      },
+      {
+        "id": "alarm_delivery",
+        "title": "アラート配信 / 分",
+        "tip": "チャネル別・結果別の HTTP アラートフック配信数。成功、または配信に失敗した理由。"
+      },
+      {
+        "id": "alarm_delivery_status",
+        "title": "アラート配信レスポンス / 分",
+        "tip": "チャネル別・ステータスクラス別の HTTP アラートフックのレスポンス数。"
+      },
+      {
+        "id": "alarm_delivery_latency",
+        "title": "アラート配信レイテンシ (ms)"
+      },
+      {
+        "id": "alarm_grpc_delivery",
+        "title": "アラート gRPC 配信 / 分",
+        "tip": "メッセージ種別（alarm/recovery）・結果別の gRPC アラートフック配信数。成功、または配信に失敗した理由。"
+      },
+      {
+        "id": "alarm_grpc_delivery_messages",
+        "title": "アラート gRPC メッセージ数 / 分",
+        "tip": "メッセージ種別・結果別の gRPC アラートフックメッセージ数。"
+      },
+      {
+        "id": "alarm_grpc_delivery_latency",
+        "title": "アラート gRPC 配信レイテンシ (ms)"
       }
     ]
   },
