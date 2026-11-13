@@ -175,9 +175,47 @@
         "title": "Zipkin Span 丢弃数"
       },
       {
+        "id": "cluster_size",
+        "title": "集群规模",
+        "tip": "当前节点看到的 OAP 集群节点数。"
+      },
+      {
+        "id": "remote_traffic",
+        "title": "集群 Remote 流量 / 分钟",
+        "tip": "均为每分钟次数。对端/本地 fan-out（self=Y）、对端出站错误（self=N）、入站接收/错误/目标缺失。目标已汇总；按对端看延迟面板。",
+        "expressionLabels": [
+          "对端出站",
+          "本地出站",
+          "出站错误",
+          "入站",
+          "入站错误",
+          "目标缺失"
+        ]
+      },
+      {
+        "id": "remote_out_pressure",
+        "title": "集群 Remote 出站压力",
+        "tip": "仅对端（self=N），目标已汇总。左：inflight 并发流（sum）。右：queue 占用%（0–100，max）；block 等待秒/分（sum）。",
+        "expressionLabels": [
+          "进行中流",
+          "队列",
+          "阻塞"
+        ]
+      },
+      {
+        "id": "remote_latency",
+        "title": "集群 Remote 延迟（ms）",
+        "tip": "单位毫秒。出站（self=N）：最差 p50/p99 与 Top5 目标 p99。入站：逐条 p99。省略本地 fan-out。",
+        "expressionLabels": [
+          "出站最差",
+          "出站按目标",
+          "入站 p99"
+        ]
+      },
+      {
         "id": "alarm_delivery",
         "title": "告警投递 / 分钟",
-        "tip": "各通道 HTTP 告警钩子的投递次数，按结果区分：成功，或投递失败的原因。"
+        "tip": "各通道（HTTP 与 gRPC）告警钩子的投递次数，按结果区分：成功，或投递失败的原因。"
       },
       {
         "id": "alarm_delivery_status",
@@ -186,7 +224,8 @@
       },
       {
         "id": "alarm_delivery_latency",
-        "title": "告警投递延迟（ms）"
+        "title": "告警投递延迟（ms）",
+        "tip": "各通道（HTTP 与 gRPC）告警钩子的投递延迟。"
       }
     ]
   }
