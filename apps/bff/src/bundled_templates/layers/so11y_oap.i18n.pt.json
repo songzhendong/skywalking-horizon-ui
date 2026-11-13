@@ -175,6 +175,44 @@
         "title": "Spans Zipkin descartados"
       },
       {
+        "id": "cluster_size",
+        "title": "Tamanho do cluster",
+        "tip": "Tamanho do cluster OAP visto por este nó."
+      },
+      {
+        "id": "remote_traffic",
+        "title": "Cluster Remote Traffic / min",
+        "tip": "Counts per minute. Peer / local fan-out (self=Y), peer out errors (self=N), inbound receives/errors/target-not-found. Dest rolled up — Latency for per-peer drill-down.",
+        "expressionLabels": [
+          "peer out",
+          "self out",
+          "out error",
+          "in",
+          "in error",
+          "target missing"
+        ]
+      },
+      {
+        "id": "remote_out_pressure",
+        "title": "Cluster Remote Out Pressure",
+        "tip": "Peer clients (self=N), dest rolled up. Left: inflight streams (count, sum). Right: queue used % (0-100, max); block wait seconds / min (sum).",
+        "expressionLabels": [
+          "inflight",
+          "queue",
+          "block"
+        ]
+      },
+      {
+        "id": "remote_latency",
+        "title": "Cluster Remote Latency (ms)",
+        "tip": "Milliseconds. Out (self=N): worst peer p50/p99 (max) and top-5 dest by p99. In: per-message p99. Self fan-out omitted.",
+        "expressionLabels": [
+          "out worst",
+          "out by dest",
+          "in p99"
+        ]
+      },
+      {
         "id": "alarm_delivery",
         "title": "Entrega de alarmes / min",
         "tip": "Entregas dos hooks de alarme por canal (HTTP e gRPC) e resultado: sucesso, ou o motivo da falha na entrega."
