@@ -217,37 +217,57 @@
         "format": "int"
       },
       {
-        "id": "master_failover",
-        "title": "Failover Check Count / Duration p99",
-        "tip": "Scheduler failover checks (ds.master.scheduler.failover.check.*).",
+        "id": "master_failover_count",
+        "title": "Failover Check Count",
+        "tip": "Scheduler failover checks per minute (ds.master.scheduler.failover.check.count).",
         "type": "line",
+        "unit": "/min",
         "expressions": [
-          "meter_dolphinscheduler_instance_master_scheduler_failover_check_count",
-          "meter_dolphinscheduler_instance_master_scheduler_failover_check_time_percentile{p='99'}"
-        ],
-        "expressionLabels": [
-          "check count /min",
-          "duration p99 (ms)"
+          "meter_dolphinscheduler_instance_master_scheduler_failover_check_count"
         ],
         "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_master_scheduler_failover_check_count", "op": "exists" },
+        "span": 6,
+        "rowSpan": 2,
+        "format": "int"
+      },
+      {
+        "id": "master_failover_duration",
+        "title": "Failover Check Duration p99 (ms)",
+        "tip": "Scheduler failover check latency percentile (ds.master.scheduler.failover.check.time).",
+        "type": "line",
+        "unit": "ms",
+        "expressions": [
+          "meter_dolphinscheduler_instance_master_scheduler_failover_check_time_percentile{p='99'}"
+        ],
+        "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_master_scheduler_failover_check_time_percentile", "op": "exists" },
         "span": 6,
         "rowSpan": 2,
         "format": "decimal"
       },
       {
-        "id": "rpc",
-        "title": "RPC Exception / Duration p99",
-        "tip": "Sync RPC client exceptions and latency (ds.rpc.client.sync.request.*).",
+        "id": "rpc_exceptions",
+        "title": "RPC Exception",
+        "tip": "Sync RPC client exceptions per minute (ds.rpc.client.sync.request.exception.count).",
         "type": "line",
+        "unit": "/min",
         "expressions": [
-          "meter_dolphinscheduler_instance_rpc_client_sync_request_exception_count",
-          "meter_dolphinscheduler_instance_rpc_client_sync_request_duration_percentile{p='99'}"
-        ],
-        "expressionLabels": [
-          "exceptions /min",
-          "duration p99 (ms)"
+          "meter_dolphinscheduler_instance_rpc_client_sync_request_exception_count"
         ],
         "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_rpc_client_sync_request_exception_count", "op": "exists" },
+        "span": 6,
+        "rowSpan": 2,
+        "format": "int"
+      },
+      {
+        "id": "rpc_duration",
+        "title": "RPC Duration p99 (ms)",
+        "tip": "Sync RPC client latency percentile (ds.rpc.client.sync.request.duration.time).",
+        "type": "line",
+        "unit": "ms",
+        "expressions": [
+          "meter_dolphinscheduler_instance_rpc_client_sync_request_duration_percentile{p='99'}"
+        ],
+        "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_rpc_client_sync_request_duration_percentile", "op": "exists" },
         "span": 6,
         "rowSpan": 2,
         "format": "decimal"
@@ -275,7 +295,7 @@
       {
         "id": "worker_capacity",
         "title": "Worker CPU / Memory Usage / Available",
-        "tip": "Worker capacity (ds.worker.cpu.usage, memory.usage, memory.available).",
+        "tip": "Worker capacity: CPU and memory usage are ratios (0–1); memory available is GB (ds.worker.cpu.usage, memory.usage, memory.available).",
         "type": "line",
         "expressions": [
           "meter_dolphinscheduler_instance_worker_cpu_usage",
@@ -283,8 +303,8 @@
           "meter_dolphinscheduler_instance_worker_memory_available"
         ],
         "expressionLabels": [
-          "cpu usage",
-          "memory usage",
+          "cpu usage (0-1)",
+          "memory usage (0-1)",
           "memory available (GB)"
         ],
         "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_worker_cpu_usage", "op": "exists" },

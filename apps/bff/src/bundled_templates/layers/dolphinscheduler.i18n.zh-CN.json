@@ -99,22 +99,24 @@
         "tip": "Master 每分钟消费的命令数（ds.master.consume.command.count）。"
       },
       {
-        "id": "master_failover",
-        "title": "故障转移检查次数 / 耗时 p99",
-        "tip": "Scheduler 故障转移检查（ds.master.scheduler.failover.check.*）。",
-        "expressionLabels": [
-          "检查次数 /分钟",
-          "耗时 p99 (ms)"
-        ]
+        "id": "master_failover_count",
+        "title": "故障转移检查次数",
+        "tip": "Scheduler 每分钟故障转移检查次数（ds.master.scheduler.failover.check.count）。"
       },
       {
-        "id": "rpc",
-        "title": "RPC 异常 / 耗时 p99",
-        "tip": "同步 RPC 客户端异常与延迟（ds.rpc.client.sync.request.*）。",
-        "expressionLabels": [
-          "异常 /分钟",
-          "耗时 p99 (ms)"
-        ]
+        "id": "master_failover_duration",
+        "title": "故障转移检查耗时 p99 (ms)",
+        "tip": "Scheduler 故障转移检查延迟分位数（ds.master.scheduler.failover.check.time）。"
+      },
+      {
+        "id": "rpc_exceptions",
+        "title": "RPC 异常",
+        "tip": "同步 RPC 客户端每分钟异常数（ds.rpc.client.sync.request.exception.count）。"
+      },
+      {
+        "id": "rpc_duration",
+        "title": "RPC 耗时 p99 (ms)",
+        "tip": "同步 RPC 客户端延迟分位数（ds.rpc.client.sync.request.duration.time）。"
       },
       {
         "id": "worker_load",
@@ -129,10 +131,10 @@
       {
         "id": "worker_capacity",
         "title": "Worker CPU / 内存使用 / 可用",
-        "tip": "Worker 容量（ds.worker.cpu.usage、memory.usage、memory.available）。",
+        "tip": "Worker 容量：CPU/内存使用为 0–1 比例，可用内存为 GB。",
         "expressionLabels": [
-          "CPU 使用",
-          "内存使用",
+          "CPU 使用 (0-1)",
+          "内存使用 (0-1)",
           "可用内存 (GB)"
         ]
       },

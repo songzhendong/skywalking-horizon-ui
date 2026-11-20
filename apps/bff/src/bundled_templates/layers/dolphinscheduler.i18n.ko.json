@@ -99,22 +99,24 @@
         "tip": "Commands consumed by the master per minute (ds.master.consume.command.count)."
       },
       {
-        "id": "master_failover",
-        "title": "Failover Check Count / Duration p99",
-        "tip": "Scheduler failover checks (ds.master.scheduler.failover.check.*).",
-        "expressionLabels": [
-          "check count /min",
-          "duration p99 (ms)"
-        ]
+        "id": "master_failover_count",
+        "title": "Failover Check Count",
+        "tip": "Scheduler failover checks per minute (ds.master.scheduler.failover.check.count)."
       },
       {
-        "id": "rpc",
-        "title": "RPC Exception / Duration p99",
-        "tip": "Sync RPC client exceptions and latency (ds.rpc.client.sync.request.*).",
-        "expressionLabels": [
-          "exceptions /min",
-          "duration p99 (ms)"
-        ]
+        "id": "master_failover_duration",
+        "title": "Failover Check Duration p99 (ms)",
+        "tip": "Scheduler failover check latency percentile (ds.master.scheduler.failover.check.time)."
+      },
+      {
+        "id": "rpc_exceptions",
+        "title": "RPC Exception",
+        "tip": "Sync RPC client exceptions per minute (ds.rpc.client.sync.request.exception.count)."
+      },
+      {
+        "id": "rpc_duration",
+        "title": "RPC Duration p99 (ms)",
+        "tip": "Sync RPC client latency percentile (ds.rpc.client.sync.request.duration.time)."
       },
       {
         "id": "worker_load",
@@ -129,10 +131,10 @@
       {
         "id": "worker_capacity",
         "title": "Worker CPU / Memory Usage / Available",
-        "tip": "Worker capacity (ds.worker.cpu.usage, memory.usage, memory.available).",
+        "tip": "Worker capacity: CPU and memory usage are ratios (0–1); memory available is GB (ds.worker.cpu.usage, memory.usage, memory.available).",
         "expressionLabels": [
-          "cpu usage",
-          "memory usage",
+          "cpu usage (0-1)",
+          "memory usage (0-1)",
           "memory available (GB)"
         ]
       },
