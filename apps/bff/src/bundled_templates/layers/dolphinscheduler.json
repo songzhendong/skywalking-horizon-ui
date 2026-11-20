@@ -295,8 +295,9 @@
       {
         "id": "worker_capacity",
         "title": "Worker CPU / Memory Usage / Available",
-        "tip": "Worker capacity: CPU and memory usage are ratios (0–1); memory available is GB (ds.worker.cpu.usage, memory.usage, memory.available).",
+        "tip": "Worker capacity: CPU and memory usage (left axis, 0–1) vs memory available in GB (right axis).",
         "type": "line",
+        "unit": "",
         "expressions": [
           "meter_dolphinscheduler_instance_worker_cpu_usage",
           "meter_dolphinscheduler_instance_worker_memory_usage",
@@ -307,6 +308,8 @@
           "memory usage (0-1)",
           "memory available (GB)"
         ],
+        "expressionUnits": ["", "", "GB"],
+        "expressionAxes": [0, 0, 1],
         "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_worker_cpu_usage", "op": "exists" },
         "span": 6,
         "rowSpan": 2,
@@ -315,7 +318,7 @@
       {
         "id": "worker_pressure",
         "title": "Worker Overload / Full Submit Queue",
-        "tip": "Worker back-pressure (ds.worker.overload.count, full.submit.queue.count).",
+        "tip": "Worker back-pressure (ds.worker.overload.count, full.submit.queue.count). Gated on worker_task so overload-only or queue-only workers still show the panel.",
         "type": "line",
         "unit": "/min",
         "expressions": [
@@ -326,7 +329,7 @@
           "overload",
           "full submit queue"
         ],
-        "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_worker_overload_count", "op": "exists" },
+        "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_worker_task", "op": "exists" },
         "span": 6,
         "rowSpan": 2,
         "format": "int"
@@ -367,8 +370,9 @@
       {
         "id": "alert",
         "title": "Alert Send / Pending",
-        "tip": "Alert sends and pending queue (ds.alert.send.count, ds.alert.pending).",
+        "tip": "Alert sends per minute (left) and pending queue depth (right).",
         "type": "line",
+        "unit": "/min",
         "expressions": [
           "aggregate_labels(meter_dolphinscheduler_instance_alert_send_count, sum)",
           "meter_dolphinscheduler_instance_alert_pending"
@@ -377,7 +381,9 @@
           "send /min",
           "pending"
         ],
-        "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_alert_pending", "op": "exists" },
+        "expressionUnits": ["/min", ""],
+        "expressionAxes": [0, 1],
+        "visibleWhen": { "kind": "mqe", "expression": "aggregate_labels(meter_dolphinscheduler_instance_alert_send_count, sum)", "op": "exists" },
         "span": 12,
         "rowSpan": 2,
         "format": "int"

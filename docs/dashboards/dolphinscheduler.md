@@ -86,7 +86,7 @@ For one selected **Component** of the cluster. DolphinScheduler reports differen
 
 - **Worker CPU / Memory Usage / Available** — CPU/memory usage as ratios (0–1) and memory available in GB (`meter_dolphinscheduler_instance_worker_cpu_usage`, `meter_dolphinscheduler_instance_worker_memory_usage`, `meter_dolphinscheduler_instance_worker_memory_available`).
 
-- **Worker Overload / Full Submit Queue** — back-pressure per minute (`meter_dolphinscheduler_instance_worker_overload_count`, `meter_dolphinscheduler_instance_worker_full_submit_queue_count`).
+- **Worker Overload / Full Submit Queue** — back-pressure per minute (`meter_dolphinscheduler_instance_worker_overload_count`, `meter_dolphinscheduler_instance_worker_full_submit_queue_count`). Gated on `worker_task` so overload-only or queue-only workers still show the panel.
 
 **API component**
 
@@ -96,7 +96,7 @@ For one selected **Component** of the cluster. DolphinScheduler reports differen
 
 **Alert component**
 
-- **Alert Send / Pending** — alert sends per minute and pending queue depth (`aggregate_labels(meter_dolphinscheduler_instance_alert_send_count, sum)`, `meter_dolphinscheduler_instance_alert_pending`).
+- **Alert Send / Pending** — alert sends per minute (left axis) and pending queue depth (right). Gated on send traffic (`aggregate_labels(meter_dolphinscheduler_instance_alert_send_count, sum)`), not only on `alert_pending`.
 
 ## Requirements
 
