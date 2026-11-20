@@ -1,0 +1,173 @@
+{
+  "alias": "DolphinScheduler",
+  "group": "Workflow Scheduler",
+  "slots": {
+    "services": "DolphinScheduler clusters",
+    "instances": "Components"
+  },
+  "layer-header": {
+    "columns": [
+      {
+        "label": "Running Workflows"
+      },
+      {
+        "label": "Prepared Tasks"
+      },
+      {
+        "label": "Active Worker Tasks"
+      },
+      {
+        "label": "Task Failures / min"
+      }
+    ]
+  },
+  "dashboards": {
+    "service": [
+      {
+        "id": "running_workflows",
+        "title": "Running Workflows",
+        "tip": "Running workflow instances across the cluster (ds.workflow.instance.running)."
+      },
+      {
+        "id": "prepared_tasks",
+        "title": "Prepared Tasks",
+        "tip": "Tasks prepared for the execution queue (ds.task.prepared)."
+      },
+      {
+        "id": "active_worker_tasks",
+        "title": "Active Worker Tasks",
+        "tip": "Active execute threads summed across workers (ds.worker.active.execute.thread)."
+      },
+      {
+        "id": "task_failures",
+        "title": "Task Failures / min",
+        "tip": "Failed task instances per minute (ds.task.instance.count state=fail)."
+      },
+      {
+        "id": "task_outcomes",
+        "title": "Task Success / Fail / Timeout",
+        "tip": "Task instance outcomes per minute (ds.task.instance.count by state).",
+        "expressionLabels": [
+          "success",
+          "fail",
+          "timeout"
+        ]
+      },
+      {
+        "id": "workflow_outcomes",
+        "title": "Workflow Success / Fail",
+        "tip": "Workflow instance outcomes per minute (ds.workflow.instance.count by state).",
+        "expressionLabels": [
+          "success",
+          "fail"
+        ]
+      },
+      {
+        "id": "task_dispatch",
+        "title": "Task Dispatch / Failure / Error",
+        "tip": "Master→Worker task dispatch per minute (ds.task.dispatch.*).",
+        "expressionLabels": [
+          "dispatch",
+          "failure",
+          "error"
+        ]
+      },
+      {
+        "id": "task_execution_duration",
+        "title": "Task Execution Duration p99 (ms)",
+        "tip": "Task execution latency percentile (ds.task.execution.duration)."
+      },
+      {
+        "id": "commands_submit",
+        "title": "Commands Created / Workflow Submit",
+        "tip": "Workflow commands created and instances submitted per minute.",
+        "expressionLabels": [
+          "commands created",
+          "workflow submit"
+        ]
+      }
+    ],
+    "instance": [
+      {
+        "id": "master_overload",
+        "title": "Master Overload",
+        "tip": "Master overload events per minute (ds.master.overload.count)."
+      },
+      {
+        "id": "master_consume",
+        "title": "Commands Consumed",
+        "tip": "Commands consumed by the master per minute (ds.master.consume.command.count)."
+      },
+      {
+        "id": "master_failover",
+        "title": "Failover Check Count / Duration p99",
+        "tip": "Scheduler failover checks (ds.master.scheduler.failover.check.*).",
+        "expressionLabels": [
+          "check count /min",
+          "duration p99 (ms)"
+        ]
+      },
+      {
+        "id": "rpc",
+        "title": "RPC Exception / Duration p99",
+        "tip": "Sync RPC client exceptions and latency (ds.rpc.client.sync.request.*).",
+        "expressionLabels": [
+          "exceptions /min",
+          "duration p99 (ms)"
+        ]
+      },
+      {
+        "id": "worker_load",
+        "title": "Worker Tasks / Queue / Active Threads",
+        "tip": "Worker load (ds.worker.task, execute.queue.size, active.execute.thread).",
+        "expressionLabels": [
+          "tasks",
+          "queue size",
+          "active threads"
+        ]
+      },
+      {
+        "id": "worker_capacity",
+        "title": "Worker CPU / Memory Usage / Available",
+        "tip": "Worker capacity (ds.worker.cpu.usage, memory.usage, memory.available).",
+        "expressionLabels": [
+          "cpu usage",
+          "memory usage",
+          "memory available (GB)"
+        ]
+      },
+      {
+        "id": "worker_pressure",
+        "title": "Worker Overload / Full Submit Queue",
+        "tip": "Worker back-pressure (ds.worker.overload.count, full.submit.queue.count).",
+        "expressionLabels": [
+          "overload",
+          "full submit queue"
+        ]
+      },
+      {
+        "id": "api_traffic",
+        "title": "API Request / Response",
+        "tip": "API server request and response counts (ds.api.request.count, response.count).",
+        "expressionLabels": [
+          "requests",
+          "responses"
+        ]
+      },
+      {
+        "id": "api_latency",
+        "title": "API Response Latency p99 (ms)",
+        "tip": "API response time percentile (ds.api.response.time)."
+      },
+      {
+        "id": "alert",
+        "title": "Alert Send / Pending",
+        "tip": "Alert sends and pending queue (ds.alert.send.count, ds.alert.pending).",
+        "expressionLabels": [
+          "send /min",
+          "pending"
+        ]
+      }
+    ]
+  }
+}

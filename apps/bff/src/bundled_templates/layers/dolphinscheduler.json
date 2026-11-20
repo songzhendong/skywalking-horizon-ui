@@ -1,0 +1,367 @@
+{
+  "key": "DOLPHINSCHEDULER",
+  "alias": "DolphinScheduler",
+  "group": "Workflow Scheduler",
+  "color": "var(--sw-cyan)",
+  "documentLink": "https://skywalking.apache.org/docs/main/next/en/setup/backend/backend-dolphinscheduler-monitoring/",
+  "aliases": {
+    "services": "DolphinScheduler clusters",
+    "instances": "Components"
+  },
+  "components": {
+    "service": true,
+    "instances": true,
+    "endpoints": false,
+    "topology": false,
+    "traces": false,
+    "logs": false
+  },
+  "layer-header": {
+    "orderBy": "runningWorkflows",
+    "columns": [
+      {
+        "metric": "runningWorkflows",
+        "label": "Running Workflows",
+        "mqe": "meter_dolphinscheduler_workflow_instance_running",
+        "aggregation": "sum"
+      },
+      {
+        "metric": "preparedTasks",
+        "label": "Prepared Tasks",
+        "mqe": "meter_dolphinscheduler_task_prepared",
+        "aggregation": "sum"
+      },
+      {
+        "metric": "activeWorkerTasks",
+        "label": "Active Worker Tasks",
+        "mqe": "meter_dolphinscheduler_worker_active_execute_thread",
+        "aggregation": "sum"
+      },
+      {
+        "metric": "taskFailures",
+        "label": "Task Failures / min",
+        "mqe": "meter_dolphinscheduler_task_fail_count",
+        "aggregation": "sum",
+        "unit": "/min"
+      }
+    ]
+  },
+  "dashboards": {
+    "service": [
+      {
+        "id": "running_workflows",
+        "title": "Running Workflows",
+        "tip": "Running workflow instances across the cluster (ds.workflow.instance.running).",
+        "type": "card",
+        "expressions": [
+          "latest(meter_dolphinscheduler_workflow_instance_running)"
+        ],
+        "span": 3,
+        "rowSpan": 1,
+        "format": "int"
+      },
+      {
+        "id": "prepared_tasks",
+        "title": "Prepared Tasks",
+        "tip": "Tasks prepared for the execution queue (ds.task.prepared).",
+        "type": "card",
+        "expressions": [
+          "latest(meter_dolphinscheduler_task_prepared)"
+        ],
+        "span": 3,
+        "rowSpan": 1,
+        "format": "int"
+      },
+      {
+        "id": "active_worker_tasks",
+        "title": "Active Worker Tasks",
+        "tip": "Active execute threads summed across workers (ds.worker.active.execute.thread).",
+        "type": "card",
+        "expressions": [
+          "latest(meter_dolphinscheduler_worker_active_execute_thread)"
+        ],
+        "span": 3,
+        "rowSpan": 1,
+        "format": "int"
+      },
+      {
+        "id": "task_failures",
+        "title": "Task Failures / min",
+        "tip": "Failed task instances per minute (ds.task.instance.count state=fail).",
+        "type": "card",
+        "unit": "/min",
+        "expressions": [
+          "latest(meter_dolphinscheduler_task_fail_count)"
+        ],
+        "span": 3,
+        "rowSpan": 1,
+        "format": "int"
+      },
+      {
+        "id": "task_outcomes",
+        "title": "Task Success / Fail / Timeout",
+        "tip": "Task instance outcomes per minute (ds.task.instance.count by state).",
+        "type": "line",
+        "unit": "/min",
+        "expressions": [
+          "meter_dolphinscheduler_task_success_count",
+          "meter_dolphinscheduler_task_fail_count",
+          "meter_dolphinscheduler_task_timeout_count"
+        ],
+        "expressionLabels": [
+          "success",
+          "fail",
+          "timeout"
+        ],
+        "span": 6,
+        "rowSpan": 2,
+        "format": "int"
+      },
+      {
+        "id": "workflow_outcomes",
+        "title": "Workflow Success / Fail",
+        "tip": "Workflow instance outcomes per minute (ds.workflow.instance.count by state).",
+        "type": "line",
+        "unit": "/min",
+        "expressions": [
+          "meter_dolphinscheduler_workflow_success_count",
+          "meter_dolphinscheduler_workflow_fail_count"
+        ],
+        "expressionLabels": [
+          "success",
+          "fail"
+        ],
+        "span": 6,
+        "rowSpan": 2,
+        "format": "int"
+      },
+      {
+        "id": "task_dispatch",
+        "title": "Task Dispatch / Failure / Error",
+        "tip": "Master→Worker task dispatch per minute (ds.task.dispatch.*).",
+        "type": "line",
+        "unit": "/min",
+        "expressions": [
+          "meter_dolphinscheduler_task_dispatch_count",
+          "meter_dolphinscheduler_task_dispatch_failure_count",
+          "meter_dolphinscheduler_task_dispatch_error_count"
+        ],
+        "expressionLabels": [
+          "dispatch",
+          "failure",
+          "error"
+        ],
+        "span": 6,
+        "rowSpan": 2,
+        "format": "int"
+      },
+      {
+        "id": "task_execution_duration",
+        "title": "Task Execution Duration p99 (ms)",
+        "tip": "Task execution latency percentile (ds.task.execution.duration).",
+        "type": "line",
+        "unit": "ms",
+        "expressions": [
+          "meter_dolphinscheduler_task_execution_duration_percentile{p='99'}"
+        ],
+        "span": 6,
+        "rowSpan": 2,
+        "format": "decimal"
+      },
+      {
+        "id": "commands_submit",
+        "title": "Commands Created / Workflow Submit",
+        "tip": "Workflow commands created and instances submitted per minute.",
+        "type": "line",
+        "unit": "/min",
+        "expressions": [
+          "meter_dolphinscheduler_workflow_create_command_count",
+          "meter_dolphinscheduler_workflow_instance_submit_count"
+        ],
+        "expressionLabels": [
+          "commands created",
+          "workflow submit"
+        ],
+        "span": 12,
+        "rowSpan": 2,
+        "format": "int"
+      }
+    ],
+    "instance": [
+      {
+        "id": "master_overload",
+        "title": "Master Overload",
+        "tip": "Master overload events per minute (ds.master.overload.count).",
+        "type": "line",
+        "unit": "/min",
+        "expressions": [
+          "meter_dolphinscheduler_instance_master_overload_count"
+        ],
+        "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_master_overload_count", "op": "exists" },
+        "span": 6,
+        "rowSpan": 2,
+        "format": "int"
+      },
+      {
+        "id": "master_consume",
+        "title": "Commands Consumed",
+        "tip": "Commands consumed by the master per minute (ds.master.consume.command.count).",
+        "type": "line",
+        "unit": "/min",
+        "expressions": [
+          "meter_dolphinscheduler_instance_master_consume_command_count"
+        ],
+        "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_master_consume_command_count", "op": "exists" },
+        "span": 6,
+        "rowSpan": 2,
+        "format": "int"
+      },
+      {
+        "id": "master_failover",
+        "title": "Failover Check Count / Duration p99",
+        "tip": "Scheduler failover checks (ds.master.scheduler.failover.check.*).",
+        "type": "line",
+        "expressions": [
+          "meter_dolphinscheduler_instance_master_scheduler_failover_check_count",
+          "meter_dolphinscheduler_instance_master_scheduler_failover_check_time_percentile{p='99'}"
+        ],
+        "expressionLabels": [
+          "check count /min",
+          "duration p99 (ms)"
+        ],
+        "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_master_scheduler_failover_check_count", "op": "exists" },
+        "span": 6,
+        "rowSpan": 2,
+        "format": "decimal"
+      },
+      {
+        "id": "rpc",
+        "title": "RPC Exception / Duration p99",
+        "tip": "Sync RPC client exceptions and latency (ds.rpc.client.sync.request.*).",
+        "type": "line",
+        "expressions": [
+          "meter_dolphinscheduler_instance_rpc_client_sync_request_exception_count",
+          "meter_dolphinscheduler_instance_rpc_client_sync_request_duration_percentile{p='99'}"
+        ],
+        "expressionLabels": [
+          "exceptions /min",
+          "duration p99 (ms)"
+        ],
+        "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_rpc_client_sync_request_exception_count", "op": "exists" },
+        "span": 6,
+        "rowSpan": 2,
+        "format": "decimal"
+      },
+      {
+        "id": "worker_load",
+        "title": "Worker Tasks / Queue / Active Threads",
+        "tip": "Worker load (ds.worker.task, execute.queue.size, active.execute.thread).",
+        "type": "line",
+        "expressions": [
+          "meter_dolphinscheduler_instance_worker_task",
+          "meter_dolphinscheduler_instance_worker_execute_queue_size",
+          "meter_dolphinscheduler_instance_worker_active_execute_thread"
+        ],
+        "expressionLabels": [
+          "tasks",
+          "queue size",
+          "active threads"
+        ],
+        "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_worker_task", "op": "exists" },
+        "span": 6,
+        "rowSpan": 2,
+        "format": "int"
+      },
+      {
+        "id": "worker_capacity",
+        "title": "Worker CPU / Memory Usage / Available",
+        "tip": "Worker capacity (ds.worker.cpu.usage, memory.usage, memory.available).",
+        "type": "line",
+        "expressions": [
+          "meter_dolphinscheduler_instance_worker_cpu_usage",
+          "meter_dolphinscheduler_instance_worker_memory_usage",
+          "meter_dolphinscheduler_instance_worker_memory_available"
+        ],
+        "expressionLabels": [
+          "cpu usage",
+          "memory usage",
+          "memory available (GB)"
+        ],
+        "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_worker_cpu_usage", "op": "exists" },
+        "span": 6,
+        "rowSpan": 2,
+        "format": "decimal"
+      },
+      {
+        "id": "worker_pressure",
+        "title": "Worker Overload / Full Submit Queue",
+        "tip": "Worker back-pressure (ds.worker.overload.count, full.submit.queue.count).",
+        "type": "line",
+        "unit": "/min",
+        "expressions": [
+          "meter_dolphinscheduler_instance_worker_overload_count",
+          "meter_dolphinscheduler_instance_worker_full_submit_queue_count"
+        ],
+        "expressionLabels": [
+          "overload",
+          "full submit queue"
+        ],
+        "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_worker_overload_count", "op": "exists" },
+        "span": 6,
+        "rowSpan": 2,
+        "format": "int"
+      },
+      {
+        "id": "api_traffic",
+        "title": "API Request / Response",
+        "tip": "API server request and response counts (ds.api.request.count, response.count).",
+        "type": "line",
+        "unit": "/min",
+        "expressions": [
+          "meter_dolphinscheduler_instance_api_request_count",
+          "aggregate_labels(meter_dolphinscheduler_instance_api_response_count, sum)"
+        ],
+        "expressionLabels": [
+          "requests",
+          "responses"
+        ],
+        "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_api_request_count", "op": "exists" },
+        "span": 6,
+        "rowSpan": 2,
+        "format": "int"
+      },
+      {
+        "id": "api_latency",
+        "title": "API Response Latency p99 (ms)",
+        "tip": "API response time percentile (ds.api.response.time).",
+        "type": "line",
+        "unit": "ms",
+        "expressions": [
+          "meter_dolphinscheduler_instance_api_response_time_percentile{p='99'}"
+        ],
+        "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_api_response_time_percentile", "op": "exists" },
+        "span": 6,
+        "rowSpan": 2,
+        "format": "decimal"
+      },
+      {
+        "id": "alert",
+        "title": "Alert Send / Pending",
+        "tip": "Alert sends and pending queue (ds.alert.send.count, ds.alert.pending).",
+        "type": "line",
+        "expressions": [
+          "aggregate_labels(meter_dolphinscheduler_instance_alert_send_count, sum)",
+          "meter_dolphinscheduler_instance_alert_pending"
+        ],
+        "expressionLabels": [
+          "send /min",
+          "pending"
+        ],
+        "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_alert_pending", "op": "exists" },
+        "span": 12,
+        "rowSpan": 2,
+        "format": "int"
+      }
+    ]
+  }
+}
