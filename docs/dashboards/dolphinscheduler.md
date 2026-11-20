@@ -72,15 +72,19 @@ For one selected **Component** of the cluster. DolphinScheduler reports differen
 
 - **Commands Consumed** — commands consumed per minute (`meter_dolphinscheduler_instance_master_consume_command_count`).
 
-- **Failover Check Count / Duration p99** — scheduler failover checks (`meter_dolphinscheduler_instance_master_scheduler_failover_check_count`, `meter_dolphinscheduler_instance_master_scheduler_failover_check_time_percentile{p='99'}`).
+- **Failover Check Count** — scheduler failover checks per minute (`meter_dolphinscheduler_instance_master_scheduler_failover_check_count`).
 
-- **RPC Exception / Duration p99** — sync RPC client exceptions and latency (`meter_dolphinscheduler_instance_rpc_client_sync_request_exception_count`, `meter_dolphinscheduler_instance_rpc_client_sync_request_duration_percentile{p='99'}`).
+- **Failover Check Duration p99 (ms)** — failover check latency (`meter_dolphinscheduler_instance_master_scheduler_failover_check_time_percentile{p='99'}`).
+
+- **RPC Exception** — sync RPC client exceptions per minute (`meter_dolphinscheduler_instance_rpc_client_sync_request_exception_count`).
+
+- **RPC Duration p99 (ms)** — sync RPC latency (`meter_dolphinscheduler_instance_rpc_client_sync_request_duration_percentile{p='99'}`).
 
 **Worker component**
 
 - **Worker Tasks / Queue / Active Threads** — worker load (`meter_dolphinscheduler_instance_worker_task`, `meter_dolphinscheduler_instance_worker_execute_queue_size`, `meter_dolphinscheduler_instance_worker_active_execute_thread`).
 
-- **Worker CPU / Memory Usage / Available** — worker capacity (`meter_dolphinscheduler_instance_worker_cpu_usage`, `meter_dolphinscheduler_instance_worker_memory_usage`, `meter_dolphinscheduler_instance_worker_memory_available`).
+- **Worker CPU / Memory Usage / Available** — CPU/memory usage as ratios (0–1) and memory available in GB (`meter_dolphinscheduler_instance_worker_cpu_usage`, `meter_dolphinscheduler_instance_worker_memory_usage`, `meter_dolphinscheduler_instance_worker_memory_available`).
 
 - **Worker Overload / Full Submit Queue** — back-pressure per minute (`meter_dolphinscheduler_instance_worker_overload_count`, `meter_dolphinscheduler_instance_worker_full_submit_queue_count`).
 
