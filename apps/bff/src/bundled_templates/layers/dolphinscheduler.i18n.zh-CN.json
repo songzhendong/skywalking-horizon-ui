@@ -1,0 +1,175 @@
+{
+  "alias": "DolphinScheduler",
+  "group": "工作流调度",
+  "slots": {
+    "services": "DolphinScheduler 集群",
+    "instances": "组件"
+  },
+  "layer-header": {
+    "columns": [
+      {
+        "label": "运行中工作流"
+      },
+      {
+        "label": "已就绪任务"
+      },
+      {
+        "label": "Worker 活跃任务"
+      },
+      {
+        "label": "任务失败 / 分钟"
+      }
+    ]
+  },
+  "dashboards": {
+    "service": [
+      {
+        "id": "running_workflows",
+        "title": "运行中工作流",
+        "tip": "集群内正在运行的工作流实例数（ds.workflow.instance.running）。"
+      },
+      {
+        "id": "prepared_tasks",
+        "title": "已就绪任务",
+        "tip": "已进入执行准备队列的任务数（ds.task.prepared）。"
+      },
+      {
+        "id": "active_worker_tasks",
+        "title": "Worker 活跃任务",
+        "tip": "各 Worker 活跃执行线程合计（ds.worker.active.execute.thread）。"
+      },
+      {
+        "id": "task_failures",
+        "title": "任务失败 / 分钟",
+        "tip": "每分钟失败的任务实例数（ds.task.instance.count state=fail）。"
+      },
+      {
+        "id": "task_outcomes",
+        "title": "任务成功 / 失败 / 超时",
+        "tip": "按状态统计的任务实例结果（ds.task.instance.count）。",
+        "expressionLabels": [
+          "成功",
+          "失败",
+          "超时"
+        ]
+      },
+      {
+        "id": "workflow_outcomes",
+        "title": "工作流成功 / 失败",
+        "tip": "按状态统计的工作流实例结果（ds.workflow.instance.count）。",
+        "expressionLabels": [
+          "成功",
+          "失败"
+        ]
+      },
+      {
+        "id": "task_dispatch",
+        "title": "任务下发 / 失败 / 错误",
+        "tip": "Master→Worker 任务下发（ds.task.dispatch.*）。",
+        "expressionLabels": [
+          "下发",
+          "失败",
+          "错误"
+        ]
+      },
+      {
+        "id": "task_execution_duration",
+        "title": "任务执行耗时 p99 (ms)",
+        "tip": "任务执行延迟分位数（ds.task.execution.duration）。"
+      },
+      {
+        "id": "commands_submit",
+        "title": "命令创建 / 工作流提交",
+        "tip": "每分钟创建的工作流命令与提交的工作流实例。",
+        "expressionLabels": [
+          "命令创建",
+          "工作流提交"
+        ]
+      }
+    ],
+    "instance": [
+      {
+        "id": "master_overload",
+        "title": "Master 过载",
+        "tip": "Master 过载事件（ds.master.overload.count）。"
+      },
+      {
+        "id": "master_consume",
+        "title": "命令消费",
+        "tip": "Master 每分钟消费的命令数（ds.master.consume.command.count）。"
+      },
+      {
+        "id": "master_failover_count",
+        "title": "故障转移检查次数",
+        "tip": "Scheduler 每分钟故障转移检查次数（ds.master.scheduler.failover.check.count）。"
+      },
+      {
+        "id": "master_failover_duration",
+        "title": "故障转移检查耗时 p99 (ms)",
+        "tip": "Scheduler 故障转移检查延迟分位数（ds.master.scheduler.failover.check.time）。"
+      },
+      {
+        "id": "rpc_exceptions",
+        "title": "RPC 异常",
+        "tip": "同步 RPC 客户端每分钟异常数（ds.rpc.client.sync.request.exception.count）。"
+      },
+      {
+        "id": "rpc_duration",
+        "title": "RPC 耗时 p99 (ms)",
+        "tip": "同步 RPC 客户端延迟分位数（ds.rpc.client.sync.request.duration.time）。"
+      },
+      {
+        "id": "worker_load",
+        "title": "Worker 任务 / 队列 / 活跃线程",
+        "tip": "Worker 负载（ds.worker.task、execute.queue.size、active.execute.thread）。",
+        "expressionLabels": [
+          "任务",
+          "队列大小",
+          "活跃线程"
+        ]
+      },
+      {
+        "id": "worker_capacity",
+        "title": "Worker CPU / 内存使用 / 可用",
+        "tip": "Worker 容量：OAP 以百分数与 centi-GB 存储（MAL * 100）；图中左轴为 %，右轴为可用内存 GB（available / 100）。",
+        "expressionLabels": [
+          "CPU 使用",
+          "内存使用",
+          "可用内存"
+        ]
+      },
+      {
+        "id": "worker_pressure",
+        "title": "Worker 过载 / 提交队列满",
+        "tip": "Worker 背压（ds.worker.overload.count、full.submit.queue.count）。",
+        "expressionLabels": [
+          "过载",
+          "提交队列满"
+        ]
+      },
+      {
+        "id": "api_traffic",
+        "title": "API 请求 / 响应",
+        "tip": "API 服务请求与响应计数（ds.api.request.count、response.count）。",
+        "expressionLabels": [
+          "请求",
+          "响应"
+        ]
+      },
+      {
+        "id": "api_latency",
+        "title": "API 响应延迟 p99 (ms)",
+        "tip": "API 响应时间分位数（ds.api.response.time）。"
+      },
+      {
+        "id": "alert",
+        "title": "告警发送 / 待发送",
+        "tip": "告警发送与待发送队列（ds.alert.send.count、ds.alert.pending）。",
+        "expressionLabels": [
+          "发送 /分钟",
+          "待发送"
+        ]
+      }
+    ]
+  }
+}

@@ -236,6 +236,8 @@ catalog:
         catalog:
           - name: "Airflow"
             path: "/dashboards/airflow"
+          - name: "DolphinScheduler"
+            path: "/dashboards/dolphinscheduler"
   - name: "Access Control"
     catalog:
       - name: "Local Users"

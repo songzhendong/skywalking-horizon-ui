@@ -135,7 +135,7 @@ const POST_TRANSCRIPT_LAYERS: ReadonlySet<string> = new Set(['AI_AGENT']);
 
 describe('layer menu rows — bundled-template regression', () => {
   it('covers every bundled layer', () => {
-    expect(bundledLayers().length).toBe(49);
+    expect(bundledLayers().length).toBe(50);
   });
 
   it('resolves the same rows, in the same order, as the sidebar did', () => {
