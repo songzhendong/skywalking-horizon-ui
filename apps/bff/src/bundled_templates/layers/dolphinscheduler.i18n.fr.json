@@ -131,11 +131,11 @@
       {
         "id": "worker_capacity",
         "title": "Worker CPU / Memory Usage / Available",
-        "tip": "Worker capacity: CPU and memory usage are ratios (0–1); memory available is GB (ds.worker.cpu.usage, memory.usage, memory.available).",
+        "tip": "Worker capacity: OAP stores usage as percent and memory-available as centi-GB (MAL * 100). UI shows % on the left and GB on the right (available / 100).",
         "expressionLabels": [
-          "cpu usage (0-1)",
-          "memory usage (0-1)",
-          "memory available (GB)"
+          "cpu usage",
+          "memory usage",
+          "memory available"
         ]
       },
       {

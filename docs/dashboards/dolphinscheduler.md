@@ -84,7 +84,7 @@ For one selected **Component** of the cluster. DolphinScheduler reports differen
 
 - **Worker Tasks / Queue / Active Threads** — worker load (`meter_dolphinscheduler_instance_worker_task`, `meter_dolphinscheduler_instance_worker_execute_queue_size`, `meter_dolphinscheduler_instance_worker_active_execute_thread`).
 
-- **Worker CPU / Memory Usage / Available** — CPU/memory usage as ratios (0–1) and memory available in GB (`meter_dolphinscheduler_instance_worker_cpu_usage`, `meter_dolphinscheduler_instance_worker_memory_usage`, `meter_dolphinscheduler_instance_worker_memory_available`).
+- **Worker CPU / Memory Usage / Available** — CPU/memory usage as percent (OAP MAL stores `* 100`) and memory available in GB (`meter_dolphinscheduler_instance_worker_cpu_usage`, `meter_dolphinscheduler_instance_worker_memory_usage`, `meter_dolphinscheduler_instance_worker_memory_available/100`).
 
 - **Worker Overload / Full Submit Queue** — back-pressure per minute (`meter_dolphinscheduler_instance_worker_overload_count`, `meter_dolphinscheduler_instance_worker_full_submit_queue_count`). Gated on `worker_task` so overload-only or queue-only workers still show the panel.
 

@@ -131,11 +131,11 @@
       {
         "id": "worker_capacity",
         "title": "Worker CPU / 内存使用 / 可用",
-        "tip": "Worker 容量：CPU/内存使用为 0–1 比例，可用内存为 GB。",
+        "tip": "Worker 容量：OAP 以百分数与 centi-GB 存储（MAL * 100）；图中左轴为 %，右轴为可用内存 GB（available / 100）。",
         "expressionLabels": [
-          "CPU 使用 (0-1)",
-          "内存使用 (0-1)",
-          "可用内存 (GB)"
+          "CPU 使用",
+          "内存使用",
+          "可用内存"
         ]
       },
       {

@@ -295,20 +295,20 @@
       {
         "id": "worker_capacity",
         "title": "Worker CPU / Memory Usage / Available",
-        "tip": "Worker capacity: CPU and memory usage (left axis, 0–1) vs memory available in GB (right axis).",
+        "tip": "Worker capacity: OAP stores usage as percent and memory-available as centi-GB (MAL * 100). UI shows % on the left and GB on the right (available / 100).",
         "type": "line",
         "unit": "",
         "expressions": [
           "meter_dolphinscheduler_instance_worker_cpu_usage",
           "meter_dolphinscheduler_instance_worker_memory_usage",
-          "meter_dolphinscheduler_instance_worker_memory_available"
+          "meter_dolphinscheduler_instance_worker_memory_available/100"
         ],
         "expressionLabels": [
-          "cpu usage (0-1)",
-          "memory usage (0-1)",
-          "memory available (GB)"
+          "cpu usage",
+          "memory usage",
+          "memory available"
         ],
-        "expressionUnits": ["", "", "GB"],
+        "expressionUnits": ["%", "%", "GB"],
         "expressionAxes": [0, 0, 1],
         "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_worker_cpu_usage", "op": "exists" },
         "span": 6,
