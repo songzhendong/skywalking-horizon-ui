@@ -3,7 +3,7 @@
   "alias": "DolphinScheduler",
   "group": "Workflow Scheduler",
   "color": "var(--sw-cyan)",
-  "documentLink": "https://skywalking.apache.org/docs/main/next/en/setup/backend/backend-dolphinscheduler-monitoring/",
+  "documentLink": "https://github.com/songzhendong/skywalking/blob/feat/dolphinscheduler-monitoring/docs/en/setup/backend/backend-dolphinscheduler-monitoring.md",
   "aliases": {
     "services": "DolphinScheduler clusters",
     "instances": "Components"
@@ -287,7 +287,7 @@
           "queue size",
           "active threads"
         ],
-        "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_worker_task", "op": "exists" },
+        "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_worker_active_execute_thread", "op": "exists" },
         "span": 6,
         "rowSpan": 2,
         "format": "int"
@@ -318,7 +318,7 @@
       {
         "id": "worker_pressure",
         "title": "Worker Overload / Full Submit Queue",
-        "tip": "Worker back-pressure (ds.worker.overload.count, full.submit.queue.count). Gated on worker_task so overload-only or queue-only workers still show the panel.",
+        "tip": "Worker back-pressure (ds.worker.overload.count, full.submit.queue.count). Gated on worker CPU so idle workers without ds.worker.task still show the panel.",
         "type": "line",
         "unit": "/min",
         "expressions": [
@@ -329,7 +329,7 @@
           "overload",
           "full submit queue"
         ],
-        "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_worker_task", "op": "exists" },
+        "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_worker_cpu_usage", "op": "exists" },
         "span": 6,
         "rowSpan": 2,
         "format": "int"
@@ -370,7 +370,7 @@
       {
         "id": "alert",
         "title": "Alert Send / Pending",
-        "tip": "Alert sends per minute (left) and pending queue depth (right).",
+        "tip": "Alert sends per minute (left) and pending queue depth (right). Gated on pending so idle alert servers still show the panel.",
         "type": "line",
         "unit": "/min",
         "expressions": [
@@ -383,7 +383,7 @@
         ],
         "expressionUnits": ["/min", ""],
         "expressionAxes": [0, 1],
-        "visibleWhen": { "kind": "mqe", "expression": "aggregate_labels(meter_dolphinscheduler_instance_alert_send_count, sum)", "op": "exists" },
+        "visibleWhen": { "kind": "mqe", "expression": "meter_dolphinscheduler_instance_alert_pending", "op": "exists" },
         "span": 12,
         "rowSpan": 2,
         "format": "int"

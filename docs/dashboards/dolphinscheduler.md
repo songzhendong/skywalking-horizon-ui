@@ -86,7 +86,7 @@ For one selected **Component** of the cluster. DolphinScheduler reports differen
 
 - **Worker CPU / Memory Usage / Available** — CPU/memory usage as percent (OAP MAL stores `* 100`) and memory available in GB (`meter_dolphinscheduler_instance_worker_cpu_usage`, `meter_dolphinscheduler_instance_worker_memory_usage`, `meter_dolphinscheduler_instance_worker_memory_available/100`).
 
-- **Worker Overload / Full Submit Queue** — back-pressure per minute (`meter_dolphinscheduler_instance_worker_overload_count`, `meter_dolphinscheduler_instance_worker_full_submit_queue_count`). Gated on `worker_task` so overload-only or queue-only workers still show the panel.
+- **Worker Overload / Full Submit Queue** — back-pressure per minute (`meter_dolphinscheduler_instance_worker_overload_count`, `meter_dolphinscheduler_instance_worker_full_submit_queue_count`). Gated on worker CPU so idle workers without `ds.worker.task` still show the panel.
 
 **API component**
 
@@ -96,7 +96,7 @@ For one selected **Component** of the cluster. DolphinScheduler reports differen
 
 **Alert component**
 
-- **Alert Send / Pending** — alert sends per minute (left axis) and pending queue depth (right). Gated on send traffic (`aggregate_labels(meter_dolphinscheduler_instance_alert_send_count, sum)`), not only on `alert_pending`.
+- **Alert Send / Pending** — alert sends per minute (left axis) and pending queue depth (right). Gated on `alert_pending` so idle alert servers still show the panel.
 
 ## Requirements
 
@@ -106,4 +106,4 @@ The DOLPHINSCHEDULER dashboard is a pure consumer of what OAP reports — it inv
 
 - **Component (instance-scope) DolphinScheduler meters** — the `meter_dolphinscheduler_instance_*` family (Master / Worker / API / Alert meters), reported by each process.
 
-These meters are produced by OAP from DolphinScheduler Prometheus metrics scraped by an OpenTelemetry Collector — see [DolphinScheduler monitoring](https://skywalking.apache.org/docs/main/next/en/setup/backend/backend-dolphinscheduler-monitoring/) for how to wire the scrape → OTLP → OAP path. Each metric is queried at its own OAP scope; OAP does not roll a metric up across scopes, so an instance-scope component metric is empty until that component reports it. When a component does not emit a family — a Worker that reports no Master failover metrics, or an API that reports no Alert pending — those widgets are hidden rather than shown empty.
+These meters are produced by OAP from DolphinScheduler Prometheus metrics scraped by an OpenTelemetry Collector — see [DolphinScheduler monitoring](https://github.com/songzhendong/skywalking/blob/feat/dolphinscheduler-monitoring/docs/en/setup/backend/backend-dolphinscheduler-monitoring.md) for how to wire the scrape → OTLP → OAP path. Each metric is queried at its own OAP scope; OAP does not roll a metric up across scopes, so an instance-scope component metric is empty until that component reports it. When a component does not emit a family — a Worker that reports no Master failover metrics, or an API that reports no Alert pending — those widgets are hidden rather than shown empty.
